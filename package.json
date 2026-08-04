@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "setup-dbs":"psql -f ./prisma/db/setup.sql"
+    "setup-dbs": "psql -f ./prisma/db/setup.sql",
+    "seed": "tsx prisma/db/seed.ts"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,7 @@
   },
   "homepage": "https://github.com/scar1377/sa-news-be#readme",
   "dependencies": {
+    "@prisma/adapter-pg": "^7.9.1",
     "@prisma/client": "^7.9.1",
     "express": "^5.2.1"
   },

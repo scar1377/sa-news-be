@@ -1,12 +1,20 @@
-import { PrismaClient } from "@prisma/client/extension";
-import { topics } from "./data/development-data";
+import "dotenv/config";
+import { PrismaClient } from "../../src/generated/prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
+import { topics } from "./data/development-data/topics";
 
-const prisma = new PrismaClient();
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 
-const main = async () => {};
+const prisma = new PrismaClient({ adapter });
+
+const main = async () => {
+  await prisma.topic.createMany({ data: topics });
+};
 
 main()
-  .catch(() => {})
-  .finally(() => {
-    // db.end();
+  .catch((err) => {
+    console.error(err);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
   });
