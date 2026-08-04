@@ -16,4 +16,47 @@ datasource db {
 model Topic {
   slug String @id
   description String 
+  articles Article[]
+}
+
+model User {
+  username String @id
+  name String
+  avatarUrl String
+  comments Comment []
+  articles Article[]
+}
+
+model Article {
+  article_id Int @id @default(autoincrement())
+  title String
+  body String
+  votes Int @default(0)
+  createdAt DateTime @default(now())
+
+  topicSlug String
+  topic Topic @relation(fields: [topicSlug], references: [slug])
+
+  authorUsername String
+  author User @relation(fields: [authorUsername], references: [username])
+
+  comments Comment []
+
+  @@index([topicSlug])
+  @@index([authorUsername])
+  @@index([createdAt])
+}
+
+model Comment {
+  id Int @id @default(autoincrement())
+  body String 
+  votes Int @default(0)
+  createdAt DateTime @default(now())
+
+  articleId Int
+  article Article @relation(fields: [articleId], references: [article_id], onDelete: Cascade)
+
+  authorUsername String
+  author User @relation(fields:[authorUsername],references:[username],onDelete: Cascade)
+  
 }
