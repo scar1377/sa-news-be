@@ -33,6 +33,7 @@ model Article {
   body String
   votes Int @default(0)
   createdAt DateTime @default(now())
+  article_img_url String
 
   topicSlug String
   topic Topic @relation(fields: [topicSlug], references: [slug])
@@ -45,6 +46,7 @@ model Article {
   @@index([topicSlug])
   @@index([authorUsername])
   @@index([createdAt])
+  @@index([votes])
 }
 
 model Comment {
@@ -58,5 +60,7 @@ model Comment {
 
   authorUsername String
   author User @relation(fields:[authorUsername],references:[username],onDelete: Cascade)
+
+  @@index([articleId])
   
 }
