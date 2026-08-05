@@ -27,8 +27,11 @@ const main = async () => {
     },
   );
   await prisma.article.createMany({ data: formattedArticles });
-};
 
+  const articleData = await prisma.article.findMany({
+    select: { article_id: true, title: true },
+  });
+};
 main()
   .catch((err) => {
     console.error(err);
