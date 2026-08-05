@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest",
     "setup-dbs": "psql -f ./prisma/db/setup.sql",
     "seed": "tsx prisma/db/seed.ts"
   },
@@ -30,6 +30,7 @@
     "@types/node": "^26.1.2",
     "prisma": "^7.9.1",
     "tsx": "^4.23.5",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.10"
   }
 }
