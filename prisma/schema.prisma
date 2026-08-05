@@ -22,7 +22,7 @@ model Topic {
 model User {
   username String @id
   name String
-  avatarUrl String
+  avatar_url String
   comments Comment []
   articles Article[]
 }
@@ -35,10 +35,10 @@ model Article {
   createdAt DateTime @default(now())
   article_img_url String
 
-  topicSlug String
+  topicSlug String @map("topic")
   topic Topic @relation(fields: [topicSlug], references: [slug])
 
-  authorUsername String
+  authorUsername String @map("author")
   author User @relation(fields: [authorUsername], references: [username])
 
   comments Comment []
@@ -50,15 +50,15 @@ model Article {
 }
 
 model Comment {
-  id Int @id @default(autoincrement())
+  comment_id Int @id @default(autoincrement())
   body String 
   votes Int @default(0)
-  createdAt DateTime @default(now())
+  created_at DateTime @default(now())
 
-  articleId Int
+  articleId Int @map("article_id")
   article Article @relation(fields: [articleId], references: [article_id], onDelete: Cascade)
 
-  authorUsername String
+  authorUsername String @map("author")
   author User @relation(fields:[authorUsername],references:[username],onDelete: Cascade)
 
   @@index([articleId])
