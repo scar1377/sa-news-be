@@ -32,7 +32,7 @@ model Article {
   title String
   body String
   votes Int @default(0)
-  createdAt DateTime @default(now())
+  created_at DateTime @default(now())
   article_img_url String
 
   topicSlug String @map("topic")
@@ -45,7 +45,7 @@ model Article {
 
   @@index([topicSlug])
   @@index([authorUsername])
-  @@index([createdAt])
+  @@index([created_at])
   @@index([votes])
 }
 
