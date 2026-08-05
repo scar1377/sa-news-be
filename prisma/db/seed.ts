@@ -9,7 +9,8 @@ const prisma = new PrismaClient({ adapter });
 
 const main = async () => {
   await prisma.topic.createMany({ data: topics });
-  // await prisma.user.createMany({ data: users });
+  await prisma.user.createMany({ data: users });
+  // await prisma.comment.createMany({data:comments})
 };
 
 main()
