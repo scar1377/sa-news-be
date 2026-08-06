@@ -9,11 +9,6 @@ const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });
 
 const main = async () => {
-  await prisma.comment.deleteMany();
-  await prisma.article.deleteMany();
-  await prisma.user.deleteMany();
-  await prisma.topic.deleteMany();
-
   await prisma.$executeRawUnsafe(`
   TRUNCATE TABLE
     "Comment",
