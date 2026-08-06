@@ -1,4 +1,11 @@
-export { topics } from "./topics";
-export { articles } from "./articles";
-export { users } from "./users";
-export { comments } from "./comments";
+import { topics } from "./topics";
+import { articles } from "./articles";
+import { users } from "./users";
+import { comments } from "./comments";
+
+export const devData = {
+  topics,
+  articles,
+  users,
+  comments,
+};

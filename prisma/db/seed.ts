@@ -1,14 +1,48 @@
-import "dotenv/config";
 import { PrismaClient } from "../../src/generated/prisma/client";
-import { PrismaPg } from "@prisma/adapter-pg";
-import { topics, users, articles, comments } from "./data/development-data";
 import { createRef } from "../utils/util-functions";
 
-const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
+export type TopicRawData = {
+  slug: string;
+  description: string;
+  img_url: string;
+};
 
-const prisma = new PrismaClient({ adapter });
+export type UserRawData = {
+  username: string;
+  name: string;
+  avatar_url: string;
+};
 
-const main = async () => {
+export type ArticleRawData = {
+  title: string;
+  topic: string;
+  author: string;
+  body: string;
+  created_at: number | Date;
+  votes: number;
+  article_img_url: string;
+};
+
+export type CommentRawData = {
+  body: string;
+  votes: number;
+  author: string;
+  article_title: string;
+  created_at: number | Date;
+};
+export type SeedData = {
+  topics: TopicRawData[];
+  users: UserRawData[];
+  articles: ArticleRawData[];
+  comments: CommentRawData[];
+};
+
+export const seed = async (
+  prisma: PrismaClient,
+  seedData: SeedData,
+): Promise<void> => {
+  const { topics, users, articles, comments } = seedData;
+
   await prisma.$executeRawUnsafe(`
   TRUNCATE TABLE
     "Comment",
@@ -51,10 +85,3 @@ const main = async () => {
   );
   await prisma.comment.createMany({ data: formattedComments });
 };
-main()
-  .catch((err) => {
-    console.error(err);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });

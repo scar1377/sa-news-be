@@ -6,7 +6,7 @@
   "scripts": {
     "test": "vitest",
     "setup-dbs": "psql -f ./prisma/db/setup.sql",
-    "seed": "tsx prisma/db/seed.ts"
+    "run-seed": "tsx ./prisma/db/run-seed.ts"
   },
   "repository": {
     "type": "git",
@@ -28,7 +28,9 @@
   "devDependencies": {
     "@types/express": "^5.0.6",
     "@types/node": "^26.1.2",
+    "@types/supertest": "^7.2.1",
     "prisma": "^7.9.1",
+    "supertest": "^7.2.2",
     "tsx": "^4.23.5",
     "typescript": "^7.0.2",
     "vitest": "^4.1.10"

@@ -1,5 +1,5 @@
 import { describe, test, expect } from "vitest";
-import { createRef } from "../util-functions";
+import { createRef } from "../prisma/utils/util-functions";
 describe("createRef", () => {
   test("return an empty object when pass an empty array as argument", () => {
     expect(createRef([], "title", "article_id")).toEqual({});
