@@ -1,8 +1,12 @@
-export const createRef = (arr, key, val) => {
-  const refObj = {};
-  for (let i = 0; i < arr.length; i++) {
-    const newKey = arr[i][key];
-    refObj[newKey] = arr[i][val];
+export const createRef = <T, K extends keyof T, V extends keyof T>(
+  arr: readonly T[],
+  key: K,
+  val: V,
+): Record<string, T[V]> => {
+  const refObj: Record<string, T[V]> = {};
+  for (const item of arr) {
+    const newKey = String(item[key]);
+    refObj[newKey] = item[val];
   }
   return refObj;
 };
