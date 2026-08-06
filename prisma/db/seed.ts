@@ -2,6 +2,7 @@ import "dotenv/config";
 import { PrismaClient } from "../../src/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { topics, users, articles, comments } from "./data/development-data";
+import { createRef } from "../utils/util-functions";
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 
@@ -12,6 +13,15 @@ const main = async () => {
   await prisma.article.deleteMany();
   await prisma.user.deleteMany();
   await prisma.topic.deleteMany();
+
+  await prisma.$executeRawUnsafe(`
+  TRUNCATE TABLE
+    "Comment",
+    "Article",
+    "User",
+    "Topic"
+  RESTART IDENTITY CASCADE
+`);
 
   await prisma.topic.createMany({ data: topics });
   await prisma.user.createMany({ data: users });
@@ -28,9 +38,21 @@ const main = async () => {
   );
   await prisma.article.createMany({ data: formattedArticles });
 
-  const articleData = await prisma.article.findMany({
-    select: { article_id: true, title: true },
-  });
+  // const articleData = await prisma.article.findMany({
+  //   select: { article_id: true, title: true },
+  // });
+
+  const formattedComments = comments.map(
+    ({ author, created_at, article_id, ...comment }) => {
+      return {
+        ...comment,
+        authorUsername: author,
+        articleId: article_id,
+        created_at: new Date(created_at),
+      };
+    },
+  );
+  await prisma.comment.createMany({ data: formattedComments });
 };
 main()
   .catch((err) => {
