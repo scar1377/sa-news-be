@@ -16,6 +16,7 @@ datasource db {
 model Topic {
   slug String @id
   description String 
+  img_url String
   articles Article[]
 }
 

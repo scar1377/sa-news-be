@@ -38,16 +38,18 @@ const main = async () => {
   );
   await prisma.article.createMany({ data: formattedArticles });
 
-  // const articleData = await prisma.article.findMany({
-  //   select: { article_id: true, title: true },
-  // });
+  const articleData = await prisma.article.findMany({
+    select: { article_id: true, title: true },
+  });
+
+  const articleIdLookUp = createRef(articleData, "title", "article_id");
 
   const formattedComments = comments.map(
-    ({ author, created_at, article_id, ...comment }) => {
+    ({ author, created_at, article_title, ...comment }) => {
       return {
         ...comment,
         authorUsername: author,
-        articleId: article_id,
+        articleId: articleIdLookUp[article_title],
         created_at: new Date(created_at),
       };
     },
