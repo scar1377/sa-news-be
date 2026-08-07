@@ -5,4 +5,9 @@ const app = express();
 
 app.use("/api/topics", topicsRouter);
 
+app.all("/{*invalidPath}", (req, res) => {
+  res.status(404).send({
+    msg: "Path not found",
+  });
+});
 export default app;

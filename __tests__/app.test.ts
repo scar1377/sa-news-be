@@ -1,5 +1,5 @@
 import request from "supertest";
-import { describe, test, expect, beforeEach, afterAll } from "vitest";
+import { describe, test, expect, beforeEach } from "vitest";
 import app from "../src/app";
 
 import { testData } from "../prisma/db/data/test-data";
@@ -11,6 +11,14 @@ import { Topic } from "../src/types/api.types";
 beforeEach(async () => await seed(prisma, testData));
 
 describe("app", () => {
+  test("status 404 - path not found", async () => {
+    const {
+      status,
+      body: { msg },
+    } = await request(app).get("/api/invalid-endpoint");
+    expect(status).toBe(404);
+    expect(msg).toBe("Path not found");
+  });
   describe("api/topics", () => {
     test("GET api/topics - status 200", async () => {
       const { body, status } = await request(app).get("/api/topics");
