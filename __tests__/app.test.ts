@@ -38,8 +38,9 @@ describe("app", () => {
 
   describe("/api/articles", () => {
     describe("GET /api/articles", async () => {
-      test("status 200 - responds with an array of article objects", async () => {
+      test.only("status 200 - responds with an array of article objects", async () => {
         const { body, status } = await request(app).get("/api/articles");
+        console.log(body.articles[0]);
         expect(status).toBe(200);
         expect(body.articles).toBeInstanceOf(Array);
         expect(body.articles.length).toBe(testData.articles.length);
