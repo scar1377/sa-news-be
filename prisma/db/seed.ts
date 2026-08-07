@@ -20,16 +20,12 @@ export const seed = async (
   await prisma.topic.createMany({ data: topics });
   await prisma.user.createMany({ data: users });
 
-  const formattedArticles = articles.map(
-    ({ topic, author, created_at, ...article }) => {
-      return {
-        ...article,
-        topicSlug: topic,
-        authorUsername: author,
-        created_at: new Date(created_at),
-      };
-    },
-  );
+  const formattedArticles = articles.map(({ created_at, ...article }) => {
+    return {
+      ...article,
+      created_at: new Date(created_at),
+    };
+  });
   await prisma.article.createMany({ data: formattedArticles });
 
   const articleData = await prisma.article.findMany({
@@ -39,11 +35,10 @@ export const seed = async (
   const articleIdLookUp = createRef(articleData, "title", "article_id");
 
   const formattedComments = comments.map(
-    ({ author, created_at, article_title, ...comment }) => {
+    ({ created_at, article_title, ...comment }) => {
       return {
         ...comment,
-        authorUsername: author,
-        articleId: articleIdLookUp[article_title],
+        article_id: articleIdLookUp[article_title],
         created_at: new Date(created_at),
       };
     },

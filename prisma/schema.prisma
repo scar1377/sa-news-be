@@ -36,16 +36,16 @@ model Article {
   created_at DateTime @default(now())
   article_img_url String
 
-  topicSlug String @map("topic")
-  topic Topic @relation(fields: [topicSlug], references: [slug])
+  topic String 
+  relatedTopic Topic @relation(fields: [topic], references: [slug])
 
-  authorUsername String @map("author")
-  author User @relation(fields: [authorUsername], references: [username])
+  author String
+  relatedAuthor User @relation(fields: [author], references: [username])
 
   comments Comment []
 
-  @@index([topicSlug])
-  @@index([authorUsername])
+  @@index([topic])
+  @@index([author])
   @@index([created_at])
   @@index([votes])
 }
@@ -56,12 +56,12 @@ model Comment {
   votes Int @default(0)
   created_at DateTime @default(now())
 
-  articleId Int @map("article_id")
-  article Article @relation(fields: [articleId], references: [article_id], onDelete: Cascade)
+  article_id Int 
+  article Article @relation(fields: [article_id], references: [article_id], onDelete: Cascade)
 
-  authorUsername String @map("author")
-  author User @relation(fields:[authorUsername],references:[username],onDelete: Cascade)
+  author String 
+  relatedAuthor User @relation(fields:[author],references:[username],onDelete: Cascade)
 
-  @@index([articleId])
+  @@index([article_id])
   
 }
