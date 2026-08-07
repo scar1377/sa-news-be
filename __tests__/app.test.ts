@@ -6,7 +6,7 @@ import { testData } from "../prisma/db/data/test-data";
 import { seed } from "../prisma/db/seed";
 import { prisma } from "../prisma/db/connection";
 
-import { Topic } from "../src/types/api.types";
+import { ArticleSummary, Topic } from "../src/types/api.types";
 
 beforeEach(async () => await seed(prisma, testData));
 
@@ -19,6 +19,7 @@ describe("app", () => {
     expect(status).toBe(404);
     expect(msg).toBe("Path not found");
   });
+
   describe("api/topics", () => {
     test("GET api/topics - status 200", async () => {
       const { body, status } = await request(app).get("/api/topics");
@@ -30,6 +31,28 @@ describe("app", () => {
           slug: expect.any(String),
           description: expect.any(String),
           img_url: expect.any(String),
+        });
+      });
+    });
+  });
+
+  describe("/api/articles", () => {
+    describe("GET /api/articles", async () => {
+      test("status 200 - responds with an array of article objects", async () => {
+        const { body, status } = await request(app).get("/api/articles");
+        expect(status).toBe(200);
+        expect(body.articles).toBeInstanceOf(Array);
+        expect(body.articles.length).toBe(testData.articles.length);
+        body.articles.forEach((article: ArticleSummary) => {
+          expect(article).toMatchObject({
+            article_id: expect.any(Number),
+            title: expect.any(String),
+            topic: expect.any(String),
+            author: expect.any(String),
+            created_at: expect.any(String),
+            votes: expect.any(Number),
+            comment_count: expect.any(Number),
+          });
         });
       });
     });
