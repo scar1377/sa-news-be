@@ -1,9 +1,8 @@
-import express from "express"
+import express from "express";
+import { topicsRouter } from "./routers/topics.router";
 
-const app = express()
+const app = express();
 
-app.get("/",(req, res)=>{
-    res.status(200).send("Hello, world!")
-})
+app.use("/api/topics", topicsRouter);
 
-export default app
+export default app;
