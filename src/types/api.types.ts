@@ -18,3 +18,8 @@ export type Article = {
 export type ArticleSummary = Omit<Article, "body"> & {
   comment_count: number;
 };
+
+export type CustomError = {
+  status: number;
+  msg: string;
+};
