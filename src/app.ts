@@ -1,7 +1,10 @@
 import express from "express";
 import { topicsRouter } from "./routers/topics.router";
 import { articlesRouter } from "./routers/articles.router";
-import { Request, Response, NextFunction } from "express";
+import {
+  customErrorHandler,
+  internalServerErrorHandler,
+} from "./controllers/errors.controller";
 
 const app = express();
 
@@ -13,8 +16,7 @@ app.all("/{*invalidPath}", (req, res) => {
   });
 });
 
-app.use((err: Error, req: Request, res: Response) => {
-  console.log(err);
-  res.status(500).send({ msg: "Internal service error" });
-});
+app.use(customErrorHandler);
+
+app.use(internalServerErrorHandler);
 export default app;

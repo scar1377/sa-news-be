@@ -19,8 +19,8 @@ export const getArticleById = (
   next: NextFunction,
 ) => {
   const { article_id } = req.params;
-  //   const parsedArticle_id = Number(article_id);
-  selectArticlesById(article_id)
+  const parsedArticle_id = Number(article_id);
+  selectArticlesById(parsedArticle_id)
     .then((article) => {
       res.status(200).send({ article });
     })

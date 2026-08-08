@@ -23,9 +23,14 @@ export const selectArticles = async () => {
   return mappedArticles;
 };
 
-export const selectArticlesById = async (article_id: string | string[]) => {
+export const selectArticlesById = async (id: number | undefined) => {
   const article = await prisma.article.findUnique({
-    where: { article_id: 1 },
+    where: { article_id: id },
   });
-  return article;
+  if (!article) {
+    return Promise.reject({
+      status: 404,
+      msg: `Article with id ${id} does not exist`,
+    });
+  } else return article;
 };
