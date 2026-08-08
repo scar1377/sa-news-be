@@ -9,8 +9,16 @@ export const selectArticles = async () => {
       author: true,
       created_at: true,
       votes: true,
+      _count: { select: { comments: true } },
     },
   });
 
-  return articles;
+  const mappedArticles = articles.map(({ _count, ...article }) => {
+    return {
+      ...article,
+      comment_count: _count.comments,
+    };
+  });
+
+  return mappedArticles;
 };
