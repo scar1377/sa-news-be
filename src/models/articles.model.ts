@@ -22,3 +22,10 @@ export const selectArticles = async () => {
 
   return mappedArticles;
 };
+
+export const selectArticlesById = async (article_id: string | string[]) => {
+  const article = await prisma.article.findUnique({
+    where: { article_id: 1 },
+  });
+  return article;
+};
