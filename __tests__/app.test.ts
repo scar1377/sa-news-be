@@ -82,7 +82,15 @@ describe("app", () => {
         expect(status).toBe(404);
         expect(body.msg).toBe(`Article with id ${article_id} does not exist`);
       });
-      test.only("status 400 - responds with invalid input error message", async () => {
+      test.only("status 400 - responds with id is not a integer message", async () => {
+        const article_id = 1.5;
+        const { status, body } = await request(app).get(
+          `/api/articles/${article_id}`,
+        );
+        expect(status).toBe(400);
+        expect(body.msg).toBe("Bad request - invalid article_id");
+      });
+      test("status 400 - responds with invalid input error message", async () => {
         const article_id = "banana";
         const { status, body } = await request(app).get(
           `/api/articles/${article_id}`,

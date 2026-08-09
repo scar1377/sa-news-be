@@ -27,6 +27,8 @@ export const selectArticlesById = async (id: number) => {
   const article = await prisma.article.findUnique({
     where: { article_id: id },
   });
+
+  console.log(article, "?????????");
   if (!article) {
     return Promise.reject({
       status: 404,
