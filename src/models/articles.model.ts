@@ -23,7 +23,7 @@ export const selectArticles = async () => {
   return mappedArticles;
 };
 
-export const selectArticlesById = async (id: number | undefined) => {
+export const selectArticlesById = async (id: number) => {
   const article = await prisma.article.findUnique({
     where: { article_id: id },
   });

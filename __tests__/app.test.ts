@@ -74,13 +74,21 @@ describe("app", () => {
             "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
         });
       });
-      test.only("status 404 - responds with article does not exist error message", async () => {
+      test("status 404 - responds with article does not exist error message", async () => {
         const article_id = 9999;
         const { status, body } = await request(app).get(
           `/api/articles/${article_id}`,
         );
         expect(status).toBe(404);
         expect(body.msg).toBe(`Article with id ${article_id} does not exist`);
+      });
+      test.only("status 400 - responds with invalid input error message", async () => {
+        const article_id = "banana";
+        const { status, body } = await request(app).get(
+          `/api/articles/${article_id}`,
+        );
+        expect(status).toBe(400);
+        expect(body.msg).toBe("Bad request - invalid article_id");
       });
     });
   });
