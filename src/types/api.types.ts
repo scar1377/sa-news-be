@@ -23,3 +23,9 @@ export type CustomError = {
   status: number;
   msg: string;
 };
+
+export type User = {
+  username: string;
+  name: string;
+  avatar_url: string;
+};

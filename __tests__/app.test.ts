@@ -6,7 +6,7 @@ import { testData } from "../prisma/db/data/test-data";
 import { seed } from "../prisma/db/seed";
 import { prisma } from "../prisma/db/connection";
 
-import { ArticleSummary, Topic } from "../src/types/api.types";
+import { ArticleSummary, Topic, User } from "../src/types/api.types";
 
 beforeEach(async () => await seed(prisma, testData));
 
@@ -20,17 +20,19 @@ describe("app", () => {
     expect(msg).toBe("Path not found");
   });
 
-  describe("api/topics", () => {
-    test("GET api/topics - status 200", async () => {
-      const { body, status } = await request(app).get("/api/topics");
-      expect(status).toBe(200);
-      expect(body.topics).toBeInstanceOf(Array);
-      expect(body.topics.length).toBe(testData.topics.length);
-      body.topics.forEach((topic: Topic) => {
-        expect(topic).toMatchObject({
-          slug: expect.any(String),
-          description: expect.any(String),
-          img_url: expect.any(String),
+  describe("/api/topics", () => {
+    describe("GET /api/topics", () => {
+      test("status 200 - responds with an array of topic objects", async () => {
+        const { body, status } = await request(app).get("/api/topics");
+        expect(status).toBe(200);
+        expect(body.topics).toBeInstanceOf(Array);
+        expect(body.topics.length).toBe(testData.topics.length);
+        body.topics.forEach((topic: Topic) => {
+          expect(topic).toMatchObject({
+            slug: expect.any(String),
+            description: expect.any(String),
+            img_url: expect.any(String),
+          });
         });
       });
     });
@@ -168,6 +170,25 @@ describe("app", () => {
           .send(voteUpdate);
         expect(status).toBe(400);
         expect(body.msg).toBe("Bad request - invalid article_id");
+      });
+    });
+  });
+
+  describe("/api/users", () => {
+    describe("GET /api/users", () => {
+      test("status 200 - responds with an array of user objects", async () => {
+        const { status, body } = request(app).get("/api/users");
+
+        expect(status).toBe(200);
+        expect(body.users).toBeInstanceOf(Array);
+        expect(body.users.length).toBe(testData.users.length);
+        body.users.forEach((user: User) => {
+          expect(user).toMatchObject({
+            username: expect.any(String),
+            name: expect.any(String),
+            avatar_url: expect.any(String),
+          });
+        });
       });
     });
   });
