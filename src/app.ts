@@ -6,12 +6,14 @@ import {
   internalServerErrorHandler,
   prismaErrorHandler,
 } from "./controllers/errors.controller";
+import { usersRouter } from "./routers/users.router";
 
 const app = express();
 app.use(express.json());
 
 app.use("/api/topics", topicsRouter);
 app.use("/api/articles", articlesRouter);
+app.use("/api/users", usersRouter);
 app.all("/{*invalidPath}", (req, res) => {
   res.status(404).send({
     msg: "Path not found",
