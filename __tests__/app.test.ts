@@ -104,7 +104,7 @@ describe("app", () => {
     });
 
     describe("PATCH /api/articles/:article_id", () => {
-      test.only("status 200 - responds with the updated article object", async () => {
+      test("status 200 - responds with the updated article object", async () => {
         const article_id = 1;
         const voteUpdate = { inc_votes: 10 };
         const { status, body } = await request(app)
@@ -123,6 +123,51 @@ describe("app", () => {
           article_img_url:
             "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
         });
+      });
+      test("status 400 - responds with missing required field message", async () => {
+        const article_id = 1;
+        const voteUpdate = {};
+        const { status, body } = await request(app)
+          .patch(`/api/articles/${article_id}`)
+          .send(voteUpdate);
+        expect(status).toBe(400);
+        expect(body.msg).toBe("Bad request - missing required field");
+      });
+      test("status 400 - responds with missing required field message", async () => {
+        const article_id = 1;
+        const voteUpdate = { inc_votes: "banana" };
+        const { status, body } = await request(app)
+          .patch(`/api/articles/${article_id}`)
+          .send(voteUpdate);
+        expect(status).toBe(400);
+        expect(body.msg).toBe("Bad request - wrong type value");
+      });
+      test("status 404 - responds with article does not exist error message", async () => {
+        const article_id = 9999;
+        const voteUpdate = { inc_votes: 10 };
+        const { status, body } = await request(app)
+          .patch(`/api/articles/${article_id}`)
+          .send(voteUpdate);
+        expect(status).toBe(404);
+        expect(body.msg).toBe(`Article with id ${article_id} does not exist`);
+      });
+      test("status 400 - responds with bad request error message", async () => {
+        const article_id = "banana";
+        const voteUpdate = { inc_votes: 10 };
+        const { status, body } = await request(app)
+          .patch(`/api/articles/${article_id}`)
+          .send(voteUpdate);
+        expect(status).toBe(400);
+        expect(body.msg).toBe("Bad request - invalid article_id");
+      });
+      test("status 400 - responds with bad request message", async () => {
+        const article_id = 1.5;
+        const voteUpdate = { inc_votes: 10 };
+        const { status, body } = await request(app)
+          .patch(`/api/articles/${article_id}`)
+          .send(voteUpdate);
+        expect(status).toBe(400);
+        expect(body.msg).toBe("Bad request - invalid article_id");
       });
     });
   });
