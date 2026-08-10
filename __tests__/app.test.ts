@@ -140,7 +140,7 @@ describe("app", () => {
           .patch(`/api/articles/${article_id}`)
           .send(voteUpdate);
         expect(status).toBe(400);
-        expect(body.msg).toBe("Bad request - wrong type value");
+        expect(body.msg).toBe("Bad request - wrong value type");
       });
       test("status 404 - responds with article does not exist error message", async () => {
         const article_id = 9999;

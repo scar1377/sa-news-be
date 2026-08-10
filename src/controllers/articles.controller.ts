@@ -48,12 +48,17 @@ export const patchArticleById = (
   const parsedArticle_id = Number(article_id);
   const body = req.body;
   let msg = "";
-
+  if (Number.isNaN(parsedArticle_id) || !Number.isInteger(parsedArticle_id)) {
+    return next({
+      status: 400,
+      msg: "Bad request - invalid article_id",
+    });
+  }
   if (!("inc_votes" in body)) {
     msg = "Bad request - missing required field";
   } else if (Number.isNaN(Number(body.inc_votes))) {
     console.log("<<<<<<<<<<<<<<<<Sha");
-    msg = "Bad request - wrong type value";
+    msg = "Bad request - wrong value type";
   }
 
   if (msg)
