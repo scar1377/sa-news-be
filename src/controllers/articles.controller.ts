@@ -57,7 +57,6 @@ export const patchArticleById = (
   if (!("inc_votes" in body)) {
     msg = "Bad request - missing required field";
   } else if (Number.isNaN(Number(body.inc_votes))) {
-    console.log("<<<<<<<<<<<<<<<<Sha");
     msg = "Bad request - wrong value type";
   }
 

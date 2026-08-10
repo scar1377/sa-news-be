@@ -149,7 +149,7 @@ describe("app", () => {
           .patch(`/api/articles/${article_id}`)
           .send(voteUpdate);
         expect(status).toBe(404);
-        expect(body.msg).toBe(`Article with id ${article_id} does not exist`);
+        expect(body.msg).toBe("Article does not exist");
       });
       test("status 400 - responds with bad request error message", async () => {
         const article_id = "banana";

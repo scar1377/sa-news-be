@@ -4,6 +4,7 @@ import { articlesRouter } from "./routers/articles.router";
 import {
   customErrorHandler,
   internalServerErrorHandler,
+  prismaErrorHandler,
 } from "./controllers/errors.controller";
 
 const app = express();
@@ -18,6 +19,6 @@ app.all("/{*invalidPath}", (req, res) => {
 });
 
 app.use(customErrorHandler);
-
+app.use(prismaErrorHandler);
 app.use(internalServerErrorHandler);
 export default app;

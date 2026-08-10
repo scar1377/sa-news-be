@@ -1,5 +1,4 @@
 import { prisma } from "../../prisma/db/connection";
-
 export const selectArticles = async () => {
   const articles = await prisma.article.findMany({
     select: {
