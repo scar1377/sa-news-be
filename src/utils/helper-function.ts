@@ -11,3 +11,7 @@ export const isCustomError = (error: unknown): error is CustomError => {
 
   return typeof error.status === "number" && typeof error.msg === "string";
 };
+
+export const isValidId = (id: number) => {
+  return !Number.isNaN(id) && Number.isInteger(id);
+};

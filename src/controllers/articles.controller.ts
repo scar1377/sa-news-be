@@ -4,6 +4,7 @@ import {
   selectArticleById,
   updateArticleById,
 } from "../models/articles.model";
+import { isValidId } from "../utils/helper-function";
 
 export const getArticles = (
   req: Request,
@@ -25,7 +26,7 @@ export const getArticleById = (
   const { article_id } = req.params;
   const parsedArticle_id = Number(article_id);
 
-  if (Number.isNaN(parsedArticle_id) || !Number.isInteger(parsedArticle_id)) {
+  if (!isValidId(parsedArticle_id)) {
     return next({
       status: 400,
       msg: "Bad request - invalid article_id",
@@ -48,7 +49,7 @@ export const patchArticleById = (
   const parsedArticle_id = Number(article_id);
   const body = req.body;
   let msg = "";
-  if (Number.isNaN(parsedArticle_id) || !Number.isInteger(parsedArticle_id)) {
+  if (!isValidId(parsedArticle_id)) {
     return next({
       status: 400,
       msg: "Bad request - invalid article_id",
