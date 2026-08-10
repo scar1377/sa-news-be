@@ -23,7 +23,7 @@ export const selectArticles = async () => {
   return mappedArticles;
 };
 
-export const selectArticlesById = async (id: number) => {
+export const selectArticleById = async (id: number) => {
   const article = await prisma.article.findUnique({
     where: { article_id: id },
   });
@@ -34,4 +34,20 @@ export const selectArticlesById = async (id: number) => {
       msg: `Article with id ${id} does not exist`,
     });
   } else return article;
+};
+
+export const updateArticleById = async (
+  id: number,
+  body: { inc_votes: number },
+) => {
+  const { inc_votes } = body;
+  const article = await prisma.article.update({
+    where: { article_id: id },
+    data: {
+      votes: {
+        increment: inc_votes,
+      },
+    },
+  });
+  return article;
 };

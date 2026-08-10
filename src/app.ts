@@ -7,6 +7,7 @@ import {
 } from "./controllers/errors.controller";
 
 const app = express();
+app.use(express.json());
 
 app.use("/api/topics", topicsRouter);
 app.use("/api/articles", articlesRouter);
