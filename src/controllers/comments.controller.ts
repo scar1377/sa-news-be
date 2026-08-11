@@ -41,6 +41,11 @@ export const postCommentByArticleId = (
   let msg = "";
   if (!("username" in body) || !("body" in body)) {
     msg = "Bad request - missing required field";
+  } else if (
+    typeof body.username !== "string" ||
+    typeof body.body !== "string"
+  ) {
+    msg = "Bad request - wrong value type";
   }
   if (msg) {
     return next({
