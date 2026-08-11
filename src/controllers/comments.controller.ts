@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { selectCommentsByArticleId } from "../models/comments.model";
 import { selectArticleById } from "../models/articles.model";
+import { isValidId } from "../utils/helper-function";
 
 export const getCommentsByArticleId = (
   req: Request,
@@ -9,6 +10,12 @@ export const getCommentsByArticleId = (
 ) => {
   const { article_id } = req.params;
   const parsedArticle_id = Number(article_id);
+  if (!isValidId(parsedArticle_id)) {
+    return next({
+      status: 400,
+      msg: "Bad request - invalid article_id",
+    });
+  }
   selectArticleById(parsedArticle_id)
     .then(() => {
       return selectCommentsByArticleId(parsedArticle_id);

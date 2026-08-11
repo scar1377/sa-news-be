@@ -30,7 +30,7 @@ export const selectArticleById = async (id: number) => {
   if (!article) {
     return Promise.reject({
       status: 404,
-      msg: `Article with id ${id} does not exist`,
+      msg: `Article does not exist`,
     });
   } else return article;
 };

@@ -85,7 +85,7 @@ describe("app", () => {
           `/api/articles/${article_id}`,
         );
         expect(status).toBe(404);
-        expect(body.msg).toBe(`Article with id ${article_id} does not exist`);
+        expect(body.msg).toBe(`Article does not exist`);
       });
       test("status 400 - responds with bad request error message", async () => {
         const article_id = "banana";
@@ -225,14 +225,30 @@ describe("app", () => {
         expect(body.comments).toBeInstanceOf(Array);
         expect(body.comments).toEqual([]);
       });
-      test.only("status 404 - responds with article not found error message", async () => {
+      test("status 404 - responds with article not found error message", async () => {
         const article_id = 9999;
         const { status, body } = await request(app).get(
           `/api/articles/${article_id}/comments`,
         );
 
         expect(status).toBe(404);
-        expect(body.msg).toBe(`Article with id ${article_id} does not exist`);
+        expect(body.msg).toBe(`Article does not exist`);
+      });
+      test("status 400 - responds with bad request error message", async () => {
+        const article_id = "banana";
+        const { status, body } = await request(app).get(
+          `/api/articles/${article_id}/comments`,
+        );
+        expect(status).toBe(400);
+        expect(body.msg).toBe("Bad request - invalid article_id");
+      });
+      test("status 400 - responds with bad request message", async () => {
+        const article_id = 1.5;
+        const { status, body } = await request(app).get(
+          `/api/articles/${article_id}/comments`,
+        );
+        expect(status).toBe(400);
+        expect(body.msg).toBe("Bad request - invalid article_id");
       });
     });
   });
