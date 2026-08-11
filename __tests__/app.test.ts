@@ -337,6 +337,19 @@ describe("app", () => {
           expect(body.msg).toBe("Bad request - wrong value type");
         });
       });
+      test("status 404 - responds with error message - user does not exist", async () => {
+        const article_id = 1;
+        const newComment = {
+          username: "banana",
+          body: "Testing comment",
+        };
+        const { status, body } = await request(app)
+          .post(`/api/articles/${article_id}/comments`)
+          .send(newComment);
+
+        expect(status).toBe(404);
+        expect(body.msg).toBe("User does not exist");
+      });
     });
   });
 });
