@@ -362,18 +362,6 @@ describe("app", () => {
         expect(status).toBe(404);
         expect(body.msg).toBe(`Article does not exist`);
       });
-      test("status 404 - responds with article not found error message", async () => {
-        const article_id = 9999;
-        const newComment = {
-          username: "butter_bridge",
-          body: "Testing comment",
-        };
-        const { status, body } = await request(app)
-          .post(`/api/articles/${article_id}/comments`)
-          .send(newComment);
-        expect(status).toBe(404);
-        expect(body.msg).toBe(`Article does not exist`);
-      });
       test("status 400 - responds with error message - invalid article_id(string)", async () => {
         const article_id = "banana";
         const newComment = {
