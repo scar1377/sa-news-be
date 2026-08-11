@@ -395,7 +395,7 @@ describe("app", () => {
         const { status } = await request(app).delete("/api/comments/1");
         expect(status).toBe(204);
       });
-      test("status 404 - responds with comments does not exist error message", async () => {
+      test("status 404 - responds with comment does not exist error message", async () => {
         const comment_id = 9999;
         const { status, body } = await request(app).delete(
           `/api/comments/${comment_id}`,
