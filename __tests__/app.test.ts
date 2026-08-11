@@ -215,6 +215,16 @@ describe("app", () => {
           });
         });
       });
+      test("status 200 - responds with an empty array when the article has no comments", async () => {
+        const article_id = 2;
+        const { status, body } = await request(app).get(
+          `/api/articles/${article_id}/comments`,
+        );
+
+        expect(status).toBe(200);
+        expect(body.comments).toBeInstanceOf(Array);
+        expect(body.comments).toEqual([]);
+      });
     });
   });
 });
