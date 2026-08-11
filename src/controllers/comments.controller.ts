@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import {
   addCommentByArticleId,
+  removeCommentById,
   selectCommentsByArticleId,
 } from "../models/comments.model";
 import { selectArticleById } from "../models/articles.model";
@@ -70,6 +71,20 @@ export const postCommentByArticleId = (
 
     .then((comment) => {
       res.status(201).send({ comment });
+    })
+    .catch(next);
+};
+
+export const deleteCommentById = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const { comment_id } = req.params;
+  const parsedComment_id = Number(comment_id);
+  removeCommentById(parsedComment_id)
+    .then(() => {
+      res.status(204).send();
     })
     .catch(next);
 };

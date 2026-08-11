@@ -388,4 +388,13 @@ describe("app", () => {
       });
     });
   });
+
+  describe("/api/comments/:comment_id", () => {
+    describe("DELETE /api/comments/:comment_id", () => {
+      test("status 204 - responds with no content", async () => {
+        const { status } = await request(app).delete("/api/comments/1");
+        expect(status).toBe(204);
+      });
+    });
+  });
 });

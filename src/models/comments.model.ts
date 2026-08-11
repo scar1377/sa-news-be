@@ -18,3 +18,11 @@ export const addCommentByArticleId = async (
   });
   return comment;
 };
+
+export const removeCommentById = async (id: number) => {
+  await prisma.comment.delete({
+    where: {
+      comment_id: id,
+    },
+  });
+};
