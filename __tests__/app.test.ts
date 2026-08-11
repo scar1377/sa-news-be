@@ -309,6 +309,34 @@ describe("app", () => {
           expect(body.msg).toBe("Bad request - missing required field");
         });
       });
+      describe("POST comment body validation: wrong value type", () => {
+        test("status 400 - wrong type username", async () => {
+          const article_id = 1;
+          const newComment = {
+            username: 1,
+            body: "Testing comment",
+          };
+          const { status, body } = await request(app)
+            .post(`/api/articles/${article_id}/comments`)
+            .send(newComment);
+
+          expect(status).toBe(400);
+          expect(body.msg).toBe("Bad request - wrong value type");
+        });
+        test("status 400 - wrong type body", async () => {
+          const article_id = 1;
+          const newComment = {
+            username: "butter_bridge",
+            body: null,
+          };
+          const { status, body } = await request(app)
+            .post(`/api/articles/${article_id}/comments`)
+            .send(newComment);
+
+          expect(status).toBe(400);
+          expect(body.msg).toBe("Bad request - wrong value type");
+        });
+      });
     });
   });
 });
