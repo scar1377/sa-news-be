@@ -39,6 +39,13 @@ export const postCommentByArticleId = (
   const parsedArticle_id = Number(article_id);
   const body = req.body;
   let msg = "";
+
+  if (!isValidId(parsedArticle_id)) {
+    return next({
+      status: 400,
+      msg: "Bad request - invalid article_id",
+    });
+  }
   if (!("username" in body) || !("body" in body)) {
     msg = "Bad request - missing required field";
   } else if (
@@ -53,7 +60,10 @@ export const postCommentByArticleId = (
       msg,
     });
   }
-  checkUserExists(body.username)
+  selectArticleById(parsedArticle_id)
+    .then(() => {
+      return checkUserExists(body.username);
+    })
     .then(() => {
       return addCommentByArticleId(parsedArticle_id, body);
     })

@@ -87,7 +87,7 @@ describe("app", () => {
         expect(status).toBe(404);
         expect(body.msg).toBe(`Article does not exist`);
       });
-      test("status 400 - responds with error message - invalid article_id", async () => {
+      test("status 400 - responds with error message - invalid article_id(string)", async () => {
         const article_id = "banana";
         const { status, body } = await request(app).get(
           `/api/articles/${article_id}`,
@@ -95,7 +95,7 @@ describe("app", () => {
         expect(status).toBe(400);
         expect(body.msg).toBe("Bad request - invalid article_id");
       });
-      test("status 400 - responds with error message - invalid article_id", async () => {
+      test("status 400 - responds with error message - invalid article_id(not an integer)", async () => {
         const article_id = 1.5;
         const { status, body } = await request(app).get(
           `/api/articles/${article_id}`,
@@ -234,7 +234,7 @@ describe("app", () => {
         expect(status).toBe(404);
         expect(body.msg).toBe(`Article does not exist`);
       });
-      test("status 400 - responds with bad request error message", async () => {
+      test("status 400 - responds with error message - invalid article_id (string)", async () => {
         const article_id = "banana";
         const { status, body } = await request(app).get(
           `/api/articles/${article_id}/comments`,
@@ -242,7 +242,7 @@ describe("app", () => {
         expect(status).toBe(400);
         expect(body.msg).toBe("Bad request - invalid article_id");
       });
-      test("status 400 - responds with bad request error message", async () => {
+      test("status 400 - responds with error message - invalid article_id (not an integer)", async () => {
         const article_id = 1.5;
         const { status, body } = await request(app).get(
           `/api/articles/${article_id}/comments`,
@@ -349,6 +349,54 @@ describe("app", () => {
 
         expect(status).toBe(404);
         expect(body.msg).toBe("User does not exist");
+      });
+      test("status 404 - responds with article not found error message", async () => {
+        const article_id = 9999;
+        const newComment = {
+          username: "butter_bridge",
+          body: "Testing comment",
+        };
+        const { status, body } = await request(app)
+          .post(`/api/articles/${article_id}/comments`)
+          .send(newComment);
+        expect(status).toBe(404);
+        expect(body.msg).toBe(`Article does not exist`);
+      });
+      test("status 404 - responds with article not found error message", async () => {
+        const article_id = 9999;
+        const newComment = {
+          username: "butter_bridge",
+          body: "Testing comment",
+        };
+        const { status, body } = await request(app)
+          .post(`/api/articles/${article_id}/comments`)
+          .send(newComment);
+        expect(status).toBe(404);
+        expect(body.msg).toBe(`Article does not exist`);
+      });
+      test("status 400 - responds with error message - invalid article_id(string)", async () => {
+        const article_id = "banana";
+        const newComment = {
+          username: "butter_bridge",
+          body: "Testing comment",
+        };
+        const { status, body } = await request(app)
+          .post(`/api/articles/${article_id}/comments`)
+          .send(newComment);
+        expect(status).toBe(400);
+        expect(body.msg).toBe("Bad request - invalid article_id");
+      });
+      test("status 400 - responds with error message - invalid article_id(not an integer)", async () => {
+        const article_id = 1.5;
+        const newComment = {
+          username: "butter_bridge",
+          body: "Testing comment",
+        };
+        const { status, body } = await request(app)
+          .post(`/api/articles/${article_id}/comments`)
+          .send(newComment);
+        expect(status).toBe(400);
+        expect(body.msg).toBe("Bad request - invalid article_id");
       });
     });
   });
