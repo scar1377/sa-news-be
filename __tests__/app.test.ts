@@ -6,7 +6,7 @@ import { testData } from "../prisma/db/data/test-data";
 import { seed } from "../prisma/db/seed";
 import { prisma } from "../prisma/db/connection";
 
-import { ArticleSummary, Topic, User } from "../src/types/api.types";
+import { ArticleSummary, Comment, Topic, User } from "../src/types/api.types";
 
 beforeEach(async () => await seed(prisma, testData));
 
@@ -204,7 +204,7 @@ describe("app", () => {
         expect(status).toBe(200);
         expect(body.comments).toBeInstanceOf(Array);
         expect(body.comments.length).toBe(11);
-        body.comments.forEach((comment) => {
+        body.comments.forEach((comment: Comment) => {
           expect(comment).toMatchObject({
             comment_id: expect.any(Number),
             body: expect.any(String),

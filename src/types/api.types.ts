@@ -10,7 +10,7 @@ export type Article = {
   topic: string;
   author: string;
   body: string;
-  created_at: number | Date;
+  created_at: string | Date;
   votes: number;
   article_img_url: string;
 };
@@ -28,4 +28,13 @@ export type User = {
   username: string;
   name: string;
   avatar_url: string;
+};
+
+export type Comment = {
+  comment_id: number;
+  body: string;
+  author: string;
+  votes: number;
+  created_at: string | Date;
+  article_id: number;
 };
