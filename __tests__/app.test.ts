@@ -87,7 +87,7 @@ describe("app", () => {
         expect(status).toBe(404);
         expect(body.msg).toBe(`Article does not exist`);
       });
-      test("status 400 - responds with bad request error message", async () => {
+      test("status 400 - responds with error message - invalid article_id", async () => {
         const article_id = "banana";
         const { status, body } = await request(app).get(
           `/api/articles/${article_id}`,
@@ -95,7 +95,7 @@ describe("app", () => {
         expect(status).toBe(400);
         expect(body.msg).toBe("Bad request - invalid article_id");
       });
-      test("status 400 - responds with bad request error message", async () => {
+      test("status 400 - responds with error message - invalid article_id", async () => {
         const article_id = 1.5;
         const { status, body } = await request(app).get(
           `/api/articles/${article_id}`,
@@ -126,7 +126,7 @@ describe("app", () => {
             "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
         });
       });
-      test("status 400 - responds with missing required field message", async () => {
+      test("status 400 - responds with error message - missing required field", async () => {
         const article_id = 1;
         const voteUpdate = {};
         const { status, body } = await request(app)
@@ -135,7 +135,7 @@ describe("app", () => {
         expect(status).toBe(400);
         expect(body.msg).toBe("Bad request - missing required field");
       });
-      test("status 400 - responds with missing required field message", async () => {
+      test("status 400 - responds with error message - wrong value type", async () => {
         const article_id = 1;
         const voteUpdate = { inc_votes: "banana" };
         const { status, body } = await request(app)
@@ -144,7 +144,7 @@ describe("app", () => {
         expect(status).toBe(400);
         expect(body.msg).toBe("Bad request - wrong value type");
       });
-      test("status 404 - responds with article does not exist error message", async () => {
+      test("status 404 - responds with error message - article does not exist", async () => {
         const article_id = 9999;
         const voteUpdate = { inc_votes: 10 };
         const { status, body } = await request(app)
@@ -153,7 +153,7 @@ describe("app", () => {
         expect(status).toBe(404);
         expect(body.msg).toBe("Article does not exist");
       });
-      test("status 400 - responds with bad request error message", async () => {
+      test("status 400 - responds with error message - invalid article_id", async () => {
         const article_id = "banana";
         const voteUpdate = { inc_votes: 10 };
         const { status, body } = await request(app)
@@ -162,7 +162,7 @@ describe("app", () => {
         expect(status).toBe(400);
         expect(body.msg).toBe("Bad request - invalid article_id");
       });
-      test("status 400 - responds with bad request error message", async () => {
+      test("status 400 - responds with error message - invalid article_id", async () => {
         const article_id = 1.5;
         const voteUpdate = { inc_votes: 10 };
         const { status, body } = await request(app)
@@ -253,7 +253,7 @@ describe("app", () => {
     });
 
     describe("POST /api/articles/:article_id/comments", () => {
-      test.only("status 201 - responds with the newly added comment object", async () => {
+      test("status 201 - responds with the newly added comment object", async () => {
         const article_id = 1;
         const newComment = {
           username: "butter_bridge",
@@ -271,6 +271,42 @@ describe("app", () => {
           author: "butter_bridge",
           article_id,
           created_at: expect.any(String),
+        });
+      });
+      describe("POST comment body validation: missing required fields", () => {
+        test("status 400 - missing username", async () => {
+          const article_id = 1;
+          const newComment = {
+            body: "Testing comment",
+          };
+          const { status, body } = await request(app)
+            .post(`/api/articles/${article_id}/comments`)
+            .send(newComment);
+
+          expect(status).toBe(400);
+          expect(body.msg).toBe("Bad request - missing required field");
+        });
+        test("status 400 - missing body", async () => {
+          const article_id = 1;
+          const newComment = {
+            username: "butter_bridge",
+          };
+          const { status, body } = await request(app)
+            .post(`/api/articles/${article_id}/comments`)
+            .send(newComment);
+
+          expect(status).toBe(400);
+          expect(body.msg).toBe("Bad request - missing required field");
+        });
+        test("status 400 - empty object", async () => {
+          const article_id = 1;
+          const newComment = {};
+          const { status, body } = await request(app)
+            .post(`/api/articles/${article_id}/comments`)
+            .send(newComment);
+
+          expect(status).toBe(400);
+          expect(body.msg).toBe("Bad request - missing required field");
         });
       });
     });
