@@ -38,6 +38,16 @@ export const postCommentByArticleId = (
   const { article_id } = req.params;
   const parsedArticle_id = Number(article_id);
   const body = req.body;
+  let msg = "";
+  if (!("username" in body) || !("body" in body)) {
+    msg = "Bad request - missing required field";
+  }
+  if (msg) {
+    return next({
+      status: 400,
+      msg,
+    });
+  }
   addCommentByArticleId(parsedArticle_id, body)
     .then((comment) => {
       res.status(201).send({ comment });
