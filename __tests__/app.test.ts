@@ -192,4 +192,29 @@ describe("app", () => {
       });
     });
   });
+
+  describe("/api/articles/:article_id/comments", () => {
+    describe("GET /api/articles/:article_id/comments", () => {
+      test.only("status 200 - responds with an array of related comment objects", async () => {
+        const article_id = 1;
+        const { status, body } = await request(app).get(
+          `/api/articles/${article_id}/comments`,
+        );
+
+        expect(status).toBe(200);
+        expect(body.comments).toBeInstanceOf(Array);
+        expect(body.comments.length).toBe(11);
+        body.comments.forEach((comment) => {
+          expect(comment).toMatchObject({
+            comment_id: expect.any(Number),
+            body: expect.any(String),
+            author: expect.any(String),
+            votes: expect.any(Number),
+            created_at: expect.any(String),
+            article_id: article_id,
+          });
+        });
+      });
+    });
+  });
 });
