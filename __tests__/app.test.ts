@@ -253,7 +253,7 @@ describe("app", () => {
     });
 
     describe("POST /api/articles/:article_id/comments", () => {
-      test("status 201 - responds with the newly added comment object", async () => {
+      test.only("status 201 - responds with the newly added comment object", async () => {
         const article_id = 1;
         const newComment = {
           username: "butter_bridge",

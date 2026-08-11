@@ -7,3 +7,14 @@ export const selectCommentsByArticleId = async (id: number) => {
 
   return comments;
 };
+
+export const addCommentByArticleId = async (
+  id: number,
+  newComment: { username: string; body: string },
+) => {
+  const { username, body } = newComment;
+  const comment = await prisma.comment.create({
+    data: { author: username, body, article_id: id },
+  });
+  return comment;
+};
