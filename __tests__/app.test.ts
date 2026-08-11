@@ -337,7 +337,7 @@ describe("app", () => {
           expect(body.msg).toBe("Bad request - wrong value type");
         });
       });
-      test.only("status 404 - responds with error message - user does not exist", async () => {
+      test("status 404 - responds with error message - user does not exist", async () => {
         const article_id = 1;
         const newComment = {
           username: "banana",

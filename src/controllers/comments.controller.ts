@@ -4,7 +4,7 @@ import {
   selectCommentsByArticleId,
 } from "../models/comments.model";
 import { selectArticleById } from "../models/articles.model";
-import { isValidId } from "../utils/helper-function";
+import { checkUserExists, isValidId } from "../utils/helper-function";
 
 export const getCommentsByArticleId = (
   req: Request,
@@ -53,7 +53,11 @@ export const postCommentByArticleId = (
       msg,
     });
   }
-  addCommentByArticleId(parsedArticle_id, body)
+  checkUserExists(body.username)
+    .then(() => {
+      return addCommentByArticleId(parsedArticle_id, body);
+    })
+
     .then((comment) => {
       res.status(201).send({ comment });
     })
