@@ -1,3 +1,4 @@
+import { prisma } from "../../prisma/db/connection";
 import { CustomError } from "../types/api.types";
 
 export const isCustomError = (error: unknown): error is CustomError => {
@@ -14,4 +15,18 @@ export const isCustomError = (error: unknown): error is CustomError => {
 
 export const isValidId = (id: number) => {
   return !Number.isNaN(id) && Number.isInteger(id);
+};
+
+export const checkUserExists = async (username: string) => {
+  const existedItem = await prisma.user.findUnique({
+    where: {
+      username,
+    },
+  });
+  if (!existedItem) {
+    return Promise.reject({
+      status: 404,
+      msg: `User does not exist`,
+    });
+  }
 };
