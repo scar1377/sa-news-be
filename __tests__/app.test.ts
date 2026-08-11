@@ -195,7 +195,7 @@ describe("app", () => {
 
   describe("/api/articles/:article_id/comments", () => {
     describe("GET /api/articles/:article_id/comments", () => {
-      test.only("status 200 - responds with an array of related comment objects", async () => {
+      test("status 200 - responds with an array of related comment objects", async () => {
         const article_id = 1;
         const { status, body } = await request(app).get(
           `/api/articles/${article_id}/comments`,

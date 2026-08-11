@@ -10,7 +10,7 @@ export type Article = {
   topic: string;
   author: string;
   body: string;
-  created_at: string | Date;
+  created_at: string;
   votes: number;
   article_img_url: string;
 };
@@ -35,6 +35,6 @@ export type Comment = {
   body: string;
   author: string;
   votes: number;
-  created_at: string | Date;
+  created_at: string;
   article_id: number;
 };
