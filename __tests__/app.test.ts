@@ -225,6 +225,15 @@ describe("app", () => {
         expect(body.comments).toBeInstanceOf(Array);
         expect(body.comments).toEqual([]);
       });
+      test.only("status 404 - responds with article not found error message", async () => {
+        const article_id = 9999;
+        const { status, body } = await request(app).get(
+          `/api/articles/${article_id}/comments`,
+        );
+
+        expect(status).toBe(404);
+        expect(body.msg).toBe(`Article with id ${article_id} does not exist`);
+      });
     });
   });
 });
