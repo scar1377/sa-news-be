@@ -95,7 +95,7 @@ describe("app", () => {
         expect(status).toBe(400);
         expect(body.msg).toBe("Bad request - invalid article_id");
       });
-      test("status 400 - responds with bad request message", async () => {
+      test("status 400 - responds with bad request error message", async () => {
         const article_id = 1.5;
         const { status, body } = await request(app).get(
           `/api/articles/${article_id}`,
@@ -162,7 +162,7 @@ describe("app", () => {
         expect(status).toBe(400);
         expect(body.msg).toBe("Bad request - invalid article_id");
       });
-      test("status 400 - responds with bad request message", async () => {
+      test("status 400 - responds with bad request error message", async () => {
         const article_id = 1.5;
         const voteUpdate = { inc_votes: 10 };
         const { status, body } = await request(app)
@@ -242,13 +242,36 @@ describe("app", () => {
         expect(status).toBe(400);
         expect(body.msg).toBe("Bad request - invalid article_id");
       });
-      test("status 400 - responds with bad request message", async () => {
+      test("status 400 - responds with bad request error message", async () => {
         const article_id = 1.5;
         const { status, body } = await request(app).get(
           `/api/articles/${article_id}/comments`,
         );
         expect(status).toBe(400);
         expect(body.msg).toBe("Bad request - invalid article_id");
+      });
+    });
+
+    describe("POST /api/articles/:article_id/comments", () => {
+      test("status 201 - responds with the newly added comment object", async () => {
+        const article_id = 1;
+        const newComment = {
+          username: "butter_bridge",
+          body: "Testing comment",
+        };
+        const { status, body } = await request(app)
+          .post(`/api/articles/${article_id}/comments`)
+          .send(newComment);
+
+        expect(status).toBe(201);
+        expect(body.comment).toEqual({
+          comment_id: expect.any(Number),
+          body: "Testing comment",
+          votes: 0,
+          author: "butter_bridge",
+          article_id,
+          created_at: expect.any(String),
+        });
       });
     });
   });
