@@ -395,6 +395,30 @@ describe("app", () => {
         const { status } = await request(app).delete("/api/comments/1");
         expect(status).toBe(204);
       });
+      test("status 404 - responds with comments does not exist error message", async () => {
+        const comment_id = 9999;
+        const { status, body } = await request(app).delete(
+          `/api/comments/${comment_id}`,
+        );
+        expect(status).toBe(404);
+        expect(body.msg).toBe(`Comment does not exist`);
+      });
+      test("status 400 - responds with error message - invalid comment_id(string)", async () => {
+        const comment_id = "banana";
+        const { status, body } = await request(app).delete(
+          `/api/comments/${comment_id}`,
+        );
+        expect(status).toBe(400);
+        expect(body.msg).toBe("Bad request - invalid comment_id");
+      });
+      test("status 400 - responds with error message - invalid comment_id(not an integer)", async () => {
+        const comment_id = 1.5;
+        const { status, body } = await request(app).delete(
+          `/api/comments/${comment_id}`,
+        );
+        expect(status).toBe(400);
+        expect(body.msg).toBe("Bad request - invalid comment_id");
+      });
     });
   });
 });

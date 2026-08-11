@@ -82,6 +82,12 @@ export const deleteCommentById = (
 ) => {
   const { comment_id } = req.params;
   const parsedComment_id = Number(comment_id);
+  if (!isValidId(parsedComment_id)) {
+    return next({
+      status: 400,
+      msg: "Bad request - invalid comment_id",
+    });
+  }
   removeCommentById(parsedComment_id)
     .then(() => {
       res.status(204).send();
