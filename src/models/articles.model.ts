@@ -10,6 +10,7 @@ export const selectArticles = async () => {
       votes: true,
       _count: { select: { comments: true } },
     },
+    orderBy: { created_at: "desc" },
   });
 
   const mappedArticles = articles.map(({ _count, ...article }) => {

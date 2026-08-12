@@ -39,7 +39,7 @@ describe("app", () => {
   });
 
   describe("/api/articles", () => {
-    describe("GET /api/articles", async () => {
+    describe("GET /api/articles", () => {
       test("status 200 - responds with an array of article objects", async () => {
         const { body, status } = await request(app).get("/api/articles");
         expect(status).toBe(200);
@@ -419,6 +419,18 @@ describe("app", () => {
         expect(status).toBe(400);
         expect(body.msg).toBe("Bad request - invalid comment_id");
       });
+    });
+  });
+
+  describe("GET /api/articles Queries", () => {
+    test("status 200 - responds with an array of article objects sorted by dates in descending order by default", async () => {
+      const { body, status } = await request(app).get("/api/articles");
+      expect(status).toBe(200);
+      const dates = body.articles.map((article: ArticleSummary) =>
+        new Date(article.created_at).getTime(),
+      );
+      const sortedDates = [...dates].sort((a, b) => b - a);
+      expect(dates).toEqual(sortedDates);
     });
   });
 });
