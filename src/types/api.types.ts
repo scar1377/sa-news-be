@@ -38,3 +38,11 @@ export type Comment = {
   created_at: string;
   article_id: number;
 };
+
+export type SortByQuery =
+  | "article_id"
+  | "title"
+  | "topic"
+  | "created_at"
+  | "author"
+  | "votes";

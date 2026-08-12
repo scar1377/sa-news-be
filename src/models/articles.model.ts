@@ -1,5 +1,18 @@
 import { prisma } from "../../prisma/db/connection";
-export const selectArticles = async () => {
+import { Prisma } from "../generated/prisma/client";
+import { SortByQuery } from "../types/api.types";
+// export type Queries = {
+//   article_id?: "asc" | "desc";
+//   title?: "asc" | "desc";
+//   topic?: "asc" | "desc";
+//   author?: "asc" | "desc";
+//   created_at?: "asc" | "desc";
+//   votes?: "asc" | "desc";
+// };
+
+export const selectArticles = async (sort_by: SortByQuery = "created_at") => {
+  const queryObj: Prisma.ArticleOrderByWithRelationInput = {};
+  queryObj[sort_by] = "desc";
   const articles = await prisma.article.findMany({
     select: {
       article_id: true,
@@ -10,7 +23,7 @@ export const selectArticles = async () => {
       votes: true,
       _count: { select: { comments: true } },
     },
-    orderBy: { created_at: "desc" },
+    orderBy: queryObj,
   });
 
   const mappedArticles = articles.map(({ _count, ...article }) => {
