@@ -444,17 +444,17 @@ describe("app", () => {
         const sortedTitles = [...titles].sort((a, b) => b.localeCompare(a));
         expect(titles).toEqual(sortedTitles);
       });
-      // test("status 200 - responds with an array of article objects sorted by the query sort_by value", async () => {
-      //   const { body, status } = await request(app).get(
-      //     "/api/articles?sort_by=comment_count",
-      //   );
-      //   expect(status).toBe(200);
-      //   const commentCounts = body.articles.map(
-      //     (article: ArticleSummary) => article.comment_count,
-      //   );
-      //   const sortedCommentCounts = [...commentCounts].sort((a, b) => b - a);
-      //   expect(commentCounts).toEqual(sortedCommentCounts);
-      // });
+      test("status 200 - responds with an array of article objects sorted by the query sort_by value", async () => {
+        const { body, status } = await request(app).get(
+          "/api/articles?sort_by=comment_count",
+        );
+        expect(status).toBe(200);
+        const commentCounts = body.articles.map(
+          (article: ArticleSummary) => article.comment_count,
+        );
+        const sortedCommentCounts = [...commentCounts].sort((a, b) => b - a);
+        expect(commentCounts).toEqual(sortedCommentCounts);
+      });
       test("status 400 - responds with an array of article objects sorted by the query sort_by value", async () => {
         const { body, status } = await request(app).get(
           "/api/articles?sort_by=banana",

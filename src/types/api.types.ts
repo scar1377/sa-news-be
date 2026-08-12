@@ -45,4 +45,5 @@ export type SortByQuery =
   | "topic"
   | "created_at"
   | "author"
-  | "votes";
+  | "votes"
+  | "comment_count";

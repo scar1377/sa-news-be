@@ -1,10 +1,13 @@
 import { prisma } from "../../prisma/db/connection";
+import { comments } from "../../prisma/db/data/test-data/comments";
 import { Prisma } from "../generated/prisma/client";
 import { SortByQuery } from "../types/api.types";
 
 export const selectArticles = async (sort_by: SortByQuery = "created_at") => {
   const queryObj: Prisma.ArticleOrderByWithRelationInput = {};
-  queryObj[sort_by] = "desc";
+  if (sort_by === "comment_count") queryObj.comments = { _count: "desc" };
+  else queryObj[sort_by] = "desc";
+
   const articles = await prisma.article.findMany({
     select: {
       article_id: true,
