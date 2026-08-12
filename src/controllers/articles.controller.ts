@@ -4,7 +4,7 @@ import {
   selectArticleById,
   updateArticleById,
 } from "../models/articles.model";
-import { isValidId } from "../utils/helper-function";
+import { isSortByQuery, isValidId } from "../utils/helper-function";
 
 export const getArticles = (
   req: Request,
@@ -13,6 +13,9 @@ export const getArticles = (
 ) => {
   const { sort_by } = req.query;
 
+  if (sort_by !== undefined && !isSortByQuery(sort_by)) {
+    return next({ status: 400, msg: "Bad request - invalid sort_by query" });
+  }
   selectArticles(sort_by)
     .then((articles) => {
       res.status(200).send({ articles });

@@ -1,5 +1,9 @@
 import { describe, test, expect } from "vitest";
-import { isCustomError, isValidId } from "../src/utils/helper-function";
+import {
+  isCustomError,
+  isSortByQuery,
+  isValidId,
+} from "../src/utils/helper-function";
 
 describe("isCustomError", () => {
   test("returns false when pass null", () => {
@@ -42,5 +46,19 @@ describe("isValidId", () => {
   });
   test("returns false if the id is not an integer", () => {
     expect(isValidId(1.5)).toBe(false);
+  });
+});
+
+describe("isSortByQuery", () => {
+  test("returns true when pass a valid sort_by query", () => {
+    expect(isSortByQuery("title")).toBe(true);
+  });
+  test("returns false when pass an invalid sort_by query string", () => {
+    expect(isSortByQuery("banana")).toBe(false);
+  });
+  test("returns false when pass a non-string sort_by query", () => {
+    expect(isSortByQuery(undefined)).toBe(false);
+    expect(isSortByQuery(null)).toBe(false);
+    expect(isSortByQuery(1)).toBe(false);
   });
 });

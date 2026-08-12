@@ -1,5 +1,5 @@
 import { prisma } from "../../prisma/db/connection";
-import { CustomError } from "../types/api.types";
+import { CustomError, SortByQuery } from "../types/api.types";
 
 export const isCustomError = (error: unknown): error is CustomError => {
   if (typeof error !== "object" || error === null) {
@@ -29,4 +29,19 @@ export const checkUserExists = async (username: string) => {
       msg: `User does not exist`,
     });
   }
+};
+
+export const isSortByQuery = (sort_by: unknown): sort_by is SortByQuery => {
+  const sortByGreenList = [
+    "article_id",
+    "title",
+    "topic",
+    "created_at",
+    "author",
+    "votes",
+    "comment_count",
+  ];
+  if (typeof sort_by === "string" && sortByGreenList.includes(sort_by))
+    return true;
+  else return false;
 };

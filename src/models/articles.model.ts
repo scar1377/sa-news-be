@@ -1,14 +1,6 @@
 import { prisma } from "../../prisma/db/connection";
 import { Prisma } from "../generated/prisma/client";
 import { SortByQuery } from "../types/api.types";
-// export type Queries = {
-//   article_id?: "asc" | "desc";
-//   title?: "asc" | "desc";
-//   topic?: "asc" | "desc";
-//   author?: "asc" | "desc";
-//   created_at?: "asc" | "desc";
-//   votes?: "asc" | "desc";
-// };
 
 export const selectArticles = async (sort_by: SortByQuery = "created_at") => {
   const queryObj: Prisma.ArticleOrderByWithRelationInput = {};
