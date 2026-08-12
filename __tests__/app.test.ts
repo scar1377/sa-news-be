@@ -444,7 +444,7 @@ describe("app", () => {
         const sortedTitles = [...titles].sort((a, b) => b.localeCompare(a));
         expect(titles).toEqual(sortedTitles);
       });
-      test("status 200 - responds with an array of article objects sorted by the query sort_by value", async () => {
+      test("status 200 - responds with an array of article objects sorted by the comment_count", async () => {
         const { body, status } = await request(app).get(
           "/api/articles?sort_by=comment_count",
         );
@@ -455,12 +455,43 @@ describe("app", () => {
         const sortedCommentCounts = [...commentCounts].sort((a, b) => b - a);
         expect(commentCounts).toEqual(sortedCommentCounts);
       });
-      test("status 400 - responds with an array of article objects sorted by the query sort_by value", async () => {
+      test("status 400 - responds with error message invalid sort_by query", async () => {
         const { body, status } = await request(app).get(
           "/api/articles?sort_by=banana",
         );
         expect(status).toBe(400);
         expect(body.msg).toBe("Bad request - invalid sort_by query");
+      });
+    });
+    describe("take order query", () => {
+      test("status 200 - responds with an array of article objects in required order", async () => {
+        const { body, status } = await request(app).get(
+          "/api/articles?order=asc",
+        );
+        expect(status).toBe(200);
+        const dates = body.articles.map((article: ArticleSummary) =>
+          new Date(article.created_at).getTime(),
+        );
+        const sortedDates = [...dates].sort((a, b) => a - b);
+        expect(dates).toEqual(sortedDates);
+      });
+      test("status 200 - responds with an array of article objects sorted by the query sort_by value in required order", async () => {
+        const { body, status } = await request(app).get(
+          "/api/articles?sort_by=comment_count&&order=asc",
+        );
+        expect(status).toBe(200);
+        const commentCounts = body.articles.map(
+          (article: ArticleSummary) => article.comment_count,
+        );
+        const sortedCommentCounts = [...commentCounts].sort((a, b) => a - b);
+        expect(commentCounts).toEqual(sortedCommentCounts);
+      });
+      test("status 400 - responds with error message invalid order query", async () => {
+        const { body, status } = await request(app).get(
+          "/api/articles?sort_by=comment_count&&order=sideways",
+        );
+        expect(status).toBe(400);
+        expect(body.msg).toBe("Bad request - invalid order query");
       });
     });
   });

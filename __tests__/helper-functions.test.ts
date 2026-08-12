@@ -1,6 +1,7 @@
 import { describe, test, expect } from "vitest";
 import {
   isCustomError,
+  isOrderQuery,
   isSortByQuery,
   isValidId,
 } from "../src/utils/helper-function";
@@ -60,5 +61,22 @@ describe("isSortByQuery", () => {
     expect(isSortByQuery(undefined)).toBe(false);
     expect(isSortByQuery(null)).toBe(false);
     expect(isSortByQuery(1)).toBe(false);
+  });
+});
+
+describe("isOrderQuery", () => {
+  test("returns true when pass a valid order query", () => {
+    expect(isOrderQuery("desc")).toBe(true);
+  });
+  test("returns true when pass a valid order query in uppercase", () => {
+    expect(isOrderQuery("ASC")).toBe(true);
+  });
+  test("returns false when pass an invalid order query", () => {
+    expect(isOrderQuery("sideways")).toBe(false);
+  });
+  test("return false when pass a non-string order query", () => {
+    expect(isOrderQuery(undefined)).toBe(false);
+    expect(isOrderQuery(null)).toBe(false);
+    expect(isOrderQuery(1)).toBe(false);
   });
 });

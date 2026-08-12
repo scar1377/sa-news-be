@@ -4,19 +4,28 @@ import {
   selectArticleById,
   updateArticleById,
 } from "../models/articles.model";
-import { isSortByQuery, isValidId } from "../utils/helper-function";
+import {
+  isOrderQuery,
+  isSortByQuery,
+  isValidId,
+} from "../utils/helper-function";
 
 export const getArticles = (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
-  const { sort_by } = req.query;
+  const { sort_by, order } = req.query;
 
   if (sort_by !== undefined && !isSortByQuery(sort_by)) {
     return next({ status: 400, msg: "Bad request - invalid sort_by query" });
   }
-  selectArticles(sort_by)
+
+  if (order !== undefined && !isOrderQuery(order)) {
+    return next({ status: 400, msg: "Bad request - invalid order query" });
+  }
+  const lowerCaseOrder = order?.toLowerCase();
+  selectArticles(sort_by, order)
     .then((articles) => {
       res.status(200).send({ articles });
     })

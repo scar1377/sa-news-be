@@ -1,4 +1,5 @@
 import { prisma } from "../../prisma/db/connection";
+import { Prisma } from "../generated/prisma/client";
 import { CustomError, SortByQuery } from "../types/api.types";
 
 export const isCustomError = (error: unknown): error is CustomError => {
@@ -42,6 +43,13 @@ export const isSortByQuery = (sort_by: unknown): sort_by is SortByQuery => {
     "comment_count",
   ];
   if (typeof sort_by === "string" && sortByGreenList.includes(sort_by))
+    return true;
+  else return false;
+};
+
+export const isOrderQuery = (order: unknown): order is Prisma.SortOrder => {
+  const orderGreenList = ["asc", "desc"];
+  if (typeof order === "string" && orderGreenList.includes(order.toLowerCase()))
     return true;
   else return false;
 };
