@@ -9,6 +9,7 @@ import {
   isSortByQuery,
   isValidId,
 } from "../utils/helper-function";
+import { Prisma } from "../generated/prisma/client";
 
 export const getArticles = (
   req: Request,
@@ -24,8 +25,14 @@ export const getArticles = (
   if (order !== undefined && !isOrderQuery(order)) {
     return next({ status: 400, msg: "Bad request - invalid order query" });
   }
-  const lowerCaseOrder = order?.toLowerCase();
-  selectArticles(sort_by, order)
+  const normalizedOrder: Prisma.SortOrder | undefined =
+    order === undefined
+      ? undefined
+      : order.toLowerCase() === "asc"
+        ? "asc"
+        : "desc";
+
+  selectArticles(sort_by, normalizedOrder)
     .then((articles) => {
       res.status(200).send({ articles });
     })

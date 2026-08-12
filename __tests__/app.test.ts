@@ -477,7 +477,7 @@ describe("app", () => {
       });
       test("status 200 - responds with an array of article objects sorted by the query sort_by value in required order", async () => {
         const { body, status } = await request(app).get(
-          "/api/articles?sort_by=comment_count&&order=asc",
+          "/api/articles?sort_by=comment_count&order=asc",
         );
         expect(status).toBe(200);
         const commentCounts = body.articles.map(
@@ -488,7 +488,7 @@ describe("app", () => {
       });
       test("status 400 - responds with error message invalid order query", async () => {
         const { body, status } = await request(app).get(
-          "/api/articles?sort_by=comment_count&&order=sideways",
+          "/api/articles?sort_by=comment_count&order=sideways",
         );
         expect(status).toBe(400);
         expect(body.msg).toBe("Bad request - invalid order query");
