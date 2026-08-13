@@ -16,7 +16,7 @@ export const getArticles = (
   res: Response,
   next: NextFunction,
 ) => {
-  const { sort_by, order } = req.query;
+  const { sort_by, order, topic } = req.query;
 
   if (sort_by !== undefined && !isSortByQuery(sort_by)) {
     return next({ status: 400, msg: "Bad request - invalid sort_by query" });
@@ -32,7 +32,7 @@ export const getArticles = (
         ? "asc"
         : "desc";
 
-  selectArticles(sort_by, normalizedOrder)
+  selectArticles(sort_by, normalizedOrder, topic)
     .then((articles) => {
       res.status(200).send({ articles });
     })

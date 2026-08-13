@@ -494,5 +494,17 @@ describe("app", () => {
         expect(body.msg).toBe("Bad request - invalid order query");
       });
     });
+    describe("take topic query", () => {
+      test("status 200 - responds with an array of article objects filtered by the required topic", async () => {
+        const { status, body } = await request(app).get(
+          "/api/articles?topic=mitch",
+        );
+        expect(status).toBe(200);
+        expect(body.articles.length).toBe(12);
+        body.articles.forEach((article: ArticleSummary) => {
+          expect(article.topic).toBe("mitch");
+        });
+      });
+    });
   });
 });

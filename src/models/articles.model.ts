@@ -5,6 +5,7 @@ import { SortByQuery } from "../types/api.types";
 export const selectArticles = async (
   sort_by: SortByQuery = "created_at",
   order: Prisma.SortOrder = "desc",
+  topic?: string,
 ) => {
   const queryObj: Prisma.ArticleOrderByWithRelationInput = {};
   if (sort_by === "comment_count") queryObj.comments = { _count: order };
@@ -20,6 +21,7 @@ export const selectArticles = async (
       votes: true,
       _count: { select: { comments: true } },
     },
+    where: { topic },
     orderBy: queryObj,
   });
 
