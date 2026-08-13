@@ -15,7 +15,7 @@ export type Article = {
   article_img_url: string;
 };
 
-export type ArticleSummary = Omit<Article, "body"> & {
+export type ArticleSummary = Omit<Article, "body" | "article_img_url"> & {
   comment_count: number;
 };
 
