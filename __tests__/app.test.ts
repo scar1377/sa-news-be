@@ -77,6 +77,7 @@ describe("app", () => {
           votes: 100,
           article_img_url:
             "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
+          comment_count: 11,
         });
       });
       test("status 404 - responds with article does not exist error message", async () => {
@@ -124,6 +125,7 @@ describe("app", () => {
           votes: 110,
           article_img_url:
             "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
+          comment_count: 11,
         });
       });
       test("status 400 - responds with error message - missing required field", async () => {

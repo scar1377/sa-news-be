@@ -37,6 +37,17 @@ export const selectArticles = async (
 
 export const selectArticleById = async (id: number) => {
   const article = await prisma.article.findUnique({
+    select: {
+      article_id: true,
+      title: true,
+      topic: true,
+      author: true,
+      body: true,
+      created_at: true,
+      votes: true,
+      article_img_url: true,
+      _count: { select: { comments: true } },
+    },
     where: { article_id: id },
   });
 
@@ -45,7 +56,14 @@ export const selectArticleById = async (id: number) => {
       status: 404,
       msg: `Article does not exist`,
     });
-  } else return article;
+  } else {
+    const { _count, ...matchedArticle } = article;
+
+    return {
+      ...matchedArticle,
+      comment_count: _count.comments,
+    };
+  }
 };
 
 export const updateArticleById = async (
@@ -54,6 +72,17 @@ export const updateArticleById = async (
 ) => {
   const { inc_votes } = body;
   const article = await prisma.article.update({
+    select: {
+      article_id: true,
+      title: true,
+      topic: true,
+      author: true,
+      body: true,
+      created_at: true,
+      votes: true,
+      article_img_url: true,
+      _count: { select: { comments: true } },
+    },
     where: { article_id: id },
     data: {
       votes: {
@@ -61,5 +90,11 @@ export const updateArticleById = async (
       },
     },
   });
-  return article;
+
+  const { _count, ...matchedArticle } = article;
+
+  return {
+    ...matchedArticle,
+    comment_count: _count.comments,
+  };
 };
