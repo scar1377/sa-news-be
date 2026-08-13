@@ -505,6 +505,13 @@ describe("app", () => {
           expect(article.topic).toBe("mitch");
         });
       });
+      test("status 200 - responds with an empty array when no articles related to the required topic", async () => {
+        const { status, body } = await request(app).get(
+          "/api/articles?topic=paper",
+        );
+        expect(status).toBe(200);
+        expect(body.articles).toEqual([]);
+      });
     });
   });
 });
