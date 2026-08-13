@@ -512,6 +512,20 @@ describe("app", () => {
         expect(status).toBe(200);
         expect(body.articles).toEqual([]);
       });
+      test("status 404 - responds with error message topic not found", async () => {
+        const { status, body } = await request(app).get(
+          "/api/articles?topic=banana",
+        );
+        expect(status).toBe(404);
+        expect(body.msg).toBe("Topic does not exist");
+      });
+      test("status 400 - responds with error message invalid topic query", async () => {
+        const { status, body } = await request(app).get(
+          "/api/articles?topic=mitch&topic=cats",
+        );
+        expect(status).toBe(400);
+        expect(body.msg).toBe("Bad request - invalid topic query");
+      });
     });
   });
 });

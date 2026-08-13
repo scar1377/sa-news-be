@@ -54,13 +54,13 @@ export const isOrderQuery = (order: unknown): order is Prisma.SortOrder => {
   else return false;
 };
 
-export const checkTopicExists = async (slug: string) => {
-  const existedTopic = await prisma.topic.findUnique({
+export const checkTopicExists = async (slug: string | undefined) => {
+  const topic = await prisma.topic.findUnique({
     where: {
       slug,
     },
   });
-  if (!existedTopic) {
+  if (!topic) {
     return Promise.reject({
       status: 404,
       msg: `Topic does not exist`,

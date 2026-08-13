@@ -5,6 +5,7 @@ import {
   updateArticleById,
 } from "../models/articles.model";
 import {
+  checkTopicExists,
   isOrderQuery,
   isSortByQuery,
   isValidId,
@@ -25,6 +26,14 @@ export const getArticles = (
   if (order !== undefined && !isOrderQuery(order)) {
     return next({ status: 400, msg: "Bad request - invalid order query" });
   }
+
+  if (topic !== undefined && typeof topic !== "string") {
+    return next({
+      status: 400,
+      msg: "Bad request - invalid topic query",
+    });
+  }
+
   const normalizedOrder: Prisma.SortOrder | undefined =
     order === undefined
       ? undefined
@@ -32,7 +41,13 @@ export const getArticles = (
         ? "asc"
         : "desc";
 
-  selectArticles(sort_by, normalizedOrder, topic)
+  const topicCheck =
+    typeof topic === "string" ? checkTopicExists(topic) : Promise.resolve();
+
+  topicCheck
+    .then(() => {
+      return selectArticles(sort_by, normalizedOrder, topic);
+    })
     .then((articles) => {
       res.status(200).send({ articles });
     })
