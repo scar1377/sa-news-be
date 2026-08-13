@@ -19,12 +19,12 @@ export const isValidId = (id: number) => {
 };
 
 export const checkUserExists = async (username: string) => {
-  const existedItem = await prisma.user.findUnique({
+  const existedUser = await prisma.user.findUnique({
     where: {
       username,
     },
   });
-  if (!existedItem) {
+  if (!existedUser) {
     return Promise.reject({
       status: 404,
       msg: `User does not exist`,
@@ -52,4 +52,18 @@ export const isOrderQuery = (order: unknown): order is Prisma.SortOrder => {
   if (typeof order === "string" && orderGreenList.includes(order.toLowerCase()))
     return true;
   else return false;
+};
+
+export const checkTopicExists = async (slug: string) => {
+  const existedTopic = await prisma.topic.findUnique({
+    where: {
+      slug,
+    },
+  });
+  if (!existedTopic) {
+    return Promise.reject({
+      status: 404,
+      msg: `Topic does not exist`,
+    });
+  }
 };
