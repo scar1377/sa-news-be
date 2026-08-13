@@ -35,6 +35,5 @@ export const internalServerErrorHandler = (
   res: Response,
   next: NextFunction,
 ) => {
-  console.log(err, "<<<<<<<<<<<<<err");
   res.status(500).send({ msg: "Internal service error" });
 };
