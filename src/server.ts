@@ -1,8 +1,7 @@
-import app from "./app"
+import app from "./app";
 
-const {PORT = 9090} = process.env
+const { PORT = 9090 } = process.env;
 
-app.listen(PORT,(err)=>{
-    if(err) console.log(err)
-    console.log(`Listening on ${PORT}...`)
-})
+app.listen(PORT, () => {
+  console.log(`Listening on ${PORT}...`);
+});
