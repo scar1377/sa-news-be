@@ -1,4 +1,4 @@
-import { createRef } from "../utils/util-functions";
+import { createRef } from "../utils/util-functions.js";
 export const seed = async (prisma, seedData) => {
     const { topics, users, articles, comments } = seedData;
     await prisma.$executeRawUnsafe(`

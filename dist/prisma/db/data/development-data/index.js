@@ -1,7 +1,7 @@
-import { topics } from "./topics";
-import { articles } from "./articles";
-import { users } from "./users";
-import { comments } from "./comments";
+import { topics } from "./topics.js";
+import { articles } from "./articles.js";
+import { users } from "./users.js";
+import { comments } from "./comments.js";
 export const devData = {
     topics,
     articles,

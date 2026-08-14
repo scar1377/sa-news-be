@@ -1,4 +1,4 @@
-import { prisma } from "../../prisma/db/connection";
+import { prisma } from "../../prisma/db/connection.js";
 export const selectArticles = async (sort_by = "created_at", order = "desc", topic) => {
     const queryObj = {};
     if (sort_by === "comment_count")

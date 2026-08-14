@@ -1,5 +1,5 @@
-import { isCustomError } from "../utils/helper-function";
-import { Prisma } from "../generated/prisma/client";
+import { isCustomError } from "../utils/helper-function.js";
+import { Prisma } from "../generated/prisma/client.js";
 export const customErrorHandler = (err, req, res, next) => {
     if (isCustomError(err)) {
         res.status(err.status).send({ msg: err.msg });

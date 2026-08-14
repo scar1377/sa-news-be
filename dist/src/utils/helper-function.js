@@ -1,4 +1,4 @@
-import { prisma } from "../../prisma/db/connection";
+import { prisma } from "../../prisma/db/connection.js";
 export const isCustomError = (error) => {
     if (typeof error !== "object" || error === null) {
         return false;

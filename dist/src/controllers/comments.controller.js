@@ -1,6 +1,6 @@
-import { addCommentByArticleId, removeCommentById, selectCommentsByArticleId, } from "../models/comments.model";
-import { selectArticleById } from "../models/articles.model";
-import { checkUserExists, isValidId } from "../utils/helper-function";
+import { addCommentByArticleId, removeCommentById, selectCommentsByArticleId, } from "../models/comments.model.js";
+import { selectArticleById } from "../models/articles.model.js";
+import { checkUserExists, isValidId } from "../utils/helper-function.js";
 export const getCommentsByArticleId = (req, res, next) => {
     const { article_id } = req.params;
     const parsedArticle_id = Number(article_id);

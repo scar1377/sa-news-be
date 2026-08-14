@@ -1,4 +1,4 @@
-import { selectTopics } from "../models/topics.model";
+import { selectTopics } from "../models/topics.model.js";
 export const getTopics = (req, res, next) => {
     selectTopics()
         .then((topics) => {

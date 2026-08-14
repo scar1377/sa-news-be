@@ -1,5 +1,5 @@
-import { selectArticles, selectArticleById, updateArticleById, } from "../models/articles.model";
-import { checkTopicExists, isOrderQuery, isSortByQuery, isValidId, } from "../utils/helper-function";
+import { selectArticles, selectArticleById, updateArticleById, } from "../models/articles.model.js";
+import { checkTopicExists, isOrderQuery, isSortByQuery, isValidId, } from "../utils/helper-function.js";
 export const getArticles = (req, res, next) => {
     const { sort_by, order, topic } = req.query;
     if (sort_by !== undefined && !isSortByQuery(sort_by)) {
