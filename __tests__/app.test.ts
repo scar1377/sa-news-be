@@ -58,7 +58,9 @@ describe("app", () => {
         });
       });
     });
+  });
 
+  describe("/api/articles/:article_id", () => {
     describe("GET /api/articles/:article_id", () => {
       test("status 200 - responds with the related article object", async () => {
         const article_id = 1;
@@ -527,6 +529,31 @@ describe("app", () => {
         );
         expect(status).toBe(400);
         expect(body.msg).toBe("Bad request - invalid topic query");
+      });
+    });
+  });
+  describe("GET /api", () => {
+    test("status 200 - responds with the descriptions of all the endpoints", async () => {
+      const { status, body } = await request(app).get("/api");
+      expect(status).toBe(200);
+      const endpoints = Object.values(body.endpoints);
+      expect(endpoints.length).toBeGreaterThan(8);
+      expect(body.endpoints["GET /api/articles"]).toMatchObject({
+        description: "serves an array of all articles",
+        queries: ["sort_by", "order", "topic"],
+        exampleResponse: {
+          articles: [
+            {
+              article_id: 1,
+              title: "Living in the shadow of a great man",
+              topic: "mitch",
+              author: "butter_bridge",
+              created_at: "2020-07-09T21:11:00.000Z",
+              votes: 100,
+              comment_count: 11,
+            },
+          ],
+        },
       });
     });
   });
