@@ -3,9 +3,9 @@ import {
   addCommentByArticleId,
   removeCommentById,
   selectCommentsByArticleId,
-} from "../models/comments.model";
-import { selectArticleById } from "../models/articles.model";
-import { checkUserExists, isValidId } from "../utils/helper-function";
+} from "../models/comments.model.js";
+import { selectArticleById } from "../models/articles.model.js";
+import { checkUserExists, isValidId } from "../utils/helper-function.js";
 
 export const getCommentsByArticleId = (
   req: Request,

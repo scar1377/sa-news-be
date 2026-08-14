@@ -1,6 +1,6 @@
-import { prisma } from "../../prisma/db/connection";
-import { Prisma } from "../generated/prisma/client";
-import { SortByQuery } from "../types/api.types";
+import { prisma } from "../../prisma/db/connection.js";
+import { Prisma } from "../generated/prisma/client.js";
+import { SortByQuery } from "../types/api.types.js";
 
 export const selectArticles = async (
   sort_by: SortByQuery = "created_at",

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import endpoints from "../endpoints.json";
+import endpoints from "../endpoints.json" with { type: "json" };
 
 export const getEndpoints = (req: Request, res: Response) => {
   res.status(200).send({ endpoints });

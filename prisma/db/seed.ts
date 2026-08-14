@@ -1,6 +1,6 @@
-import { PrismaClient } from "../../src/generated/prisma/client";
-import { SeedData } from "../types/seed.types";
-import { createRef } from "../utils/util-functions";
+import { PrismaClient } from "../../src/generated/prisma/client.js";
+import { SeedData } from "../types/seed.types.js";
+import { createRef } from "../utils/util-functions.js";
 
 export const seed = async (
   prisma: PrismaClient,

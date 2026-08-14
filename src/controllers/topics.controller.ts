@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { selectTopics } from "../models/topics.model";
+import { selectTopics } from "../models/topics.model.js";
 
 export const getTopics = (req: Request, res: Response, next: NextFunction) => {
   selectTopics()

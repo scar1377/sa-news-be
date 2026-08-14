@@ -1,14 +1,14 @@
 import express from "express";
-import { topicsRouter } from "./routers/topics.router";
-import { articlesRouter } from "./routers/articles.router";
+import { topicsRouter } from "./routers/topics.router.js";
+import { articlesRouter } from "./routers/articles.router.js";
 import {
   customErrorHandler,
   internalServerErrorHandler,
   prismaErrorHandler,
-} from "./controllers/errors.controller";
-import { usersRouter } from "./routers/users.router";
-import { commentsRouter } from "./routers/comments.router";
-import { getEndpoints } from "./controllers/api.controller";
+} from "./controllers/errors.controller.js";
+import { usersRouter } from "./routers/users.router.js";
+import { commentsRouter } from "./routers/comments.router.js";
+import { getEndpoints } from "./controllers/api.controller.js";
 
 const app = express();
 app.use(express.json());

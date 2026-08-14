@@ -1,6 +1,6 @@
-import { prisma } from "../../prisma/db/connection";
-import { devData } from "./data/development-data";
-import { seed } from "./seed";
+import { prisma } from "../../prisma/db/connection.js";
+import { devData } from "./data/development-data/index.js";
+import { seed } from "./seed.js";
 
 seed(prisma, devData)
   .catch((err) => {

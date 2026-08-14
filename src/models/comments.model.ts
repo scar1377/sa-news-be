@@ -1,4 +1,4 @@
-import { prisma } from "../../prisma/db/connection";
+import { prisma } from "../../prisma/db/connection.js";
 
 export const selectCommentsByArticleId = async (id: number) => {
   const comments = await prisma.comment.findMany({

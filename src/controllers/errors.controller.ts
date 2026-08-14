@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import { isCustomError } from "../utils/helper-function";
-import { Prisma } from "../generated/prisma/client";
+import { isCustomError } from "../utils/helper-function.js";
+import { Prisma } from "../generated/prisma/client.js";
 
 export const customErrorHandler = (
   err: unknown,

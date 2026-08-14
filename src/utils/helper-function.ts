@@ -1,6 +1,6 @@
-import { prisma } from "../../prisma/db/connection";
-import { Prisma } from "../generated/prisma/client";
-import { CustomError, SortByQuery } from "../types/api.types";
+import { prisma } from "../../prisma/db/connection.js";
+import { Prisma } from "../generated/prisma/client.js";
+import { CustomError, SortByQuery } from "../types/api.types.js";
 
 export const isCustomError = (error: unknown): error is CustomError => {
   if (typeof error !== "object" || error === null) {

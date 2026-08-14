@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { selectUsers } from "../models/users.model";
+import { selectUsers } from "../models/users.model.js";
 
 export const getUsers = (req: Request, res: Response, next: NextFunction) => {
   selectUsers()

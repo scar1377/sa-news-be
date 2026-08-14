@@ -3,14 +3,14 @@ import {
   selectArticles,
   selectArticleById,
   updateArticleById,
-} from "../models/articles.model";
+} from "../models/articles.model.js";
 import {
   checkTopicExists,
   isOrderQuery,
   isSortByQuery,
   isValidId,
-} from "../utils/helper-function";
-import { Prisma } from "../generated/prisma/client";
+} from "../utils/helper-function.js";
+import { Prisma } from "../generated/prisma/client.js";
 
 export const getArticles = (
   req: Request,

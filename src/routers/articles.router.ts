@@ -3,11 +3,11 @@ import {
   getArticleById,
   getArticles,
   patchArticleById,
-} from "../controllers/articles.controller";
+} from "../controllers/articles.controller.js";
 import {
   getCommentsByArticleId,
   postCommentByArticleId,
-} from "../controllers/comments.controller";
+} from "../controllers/comments.controller.js";
 
 export const articlesRouter = Router();
 
