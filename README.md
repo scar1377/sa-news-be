@@ -125,6 +125,12 @@ Run the test suite with:
 npm test
 ```
 
+### 8. Run the API locally
+
+```bash
+npm run dev
+```
+
 The test command runs the application in the test environment and uses the test database.
 
 The test suite covers successful requests as well as invalid input, missing resources and other error cases.
