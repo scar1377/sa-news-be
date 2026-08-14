@@ -10,7 +10,9 @@
     "test": "NODE_ENV=test vitest",
     "seed": "NODE_ENV=development tsx prisma/db/run-seed.ts",
     "setup-dbs": "psql -f ./prisma/db/setup.sql",
-    "dev": "tsx src/server.ts"
+    "dev": "tsx src/server.ts",
+    "build": "tsc",
+    "start": "node dist/src/server.js"
   },
   "repository": {
     "type": "git",
