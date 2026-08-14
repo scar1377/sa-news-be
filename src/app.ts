@@ -8,10 +8,12 @@ import {
 } from "./controllers/errors.controller";
 import { usersRouter } from "./routers/users.router";
 import { commentsRouter } from "./routers/comments.router";
+import { getEndpoints } from "./controllers/api.controller";
 
 const app = express();
 app.use(express.json());
 
+app.get("/api", getEndpoints);
 app.use("/api/topics", topicsRouter);
 app.use("/api/articles", articlesRouter);
 app.use("/api/users", usersRouter);
