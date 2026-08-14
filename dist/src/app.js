@@ -1,0 +1,23 @@
+import express from "express";
+import { topicsRouter } from "./routers/topics.router";
+import { articlesRouter } from "./routers/articles.router";
+import { customErrorHandler, internalServerErrorHandler, prismaErrorHandler, } from "./controllers/errors.controller";
+import { usersRouter } from "./routers/users.router";
+import { commentsRouter } from "./routers/comments.router";
+import { getEndpoints } from "./controllers/api.controller";
+const app = express();
+app.use(express.json());
+app.get("/api", getEndpoints);
+app.use("/api/topics", topicsRouter);
+app.use("/api/articles", articlesRouter);
+app.use("/api/users", usersRouter);
+app.use("/api/comments", commentsRouter);
+app.all("/{*invalidPath}", (req, res) => {
+    res.status(404).send({
+        msg: "Path not found",
+    });
+});
+app.use(customErrorHandler);
+app.use(prismaErrorHandler);
+app.use(internalServerErrorHandler);
+export default app;
