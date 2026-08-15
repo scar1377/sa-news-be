@@ -6,10 +6,13 @@ import {
   prismaErrorHandler,
 } from "./controllers/errors.controller.js";
 import { apiRouter } from "./routers/api.router.js";
+import { viewsRouter } from "./routers/views.router.js";
 
 const app = express();
 app.use(express.json());
+app.use(express.static("public"));
 
+app.use("/", viewsRouter);
 app.use("/api", apiRouter);
 
 app.all("/{*invalidPath}", (req, res) => {
