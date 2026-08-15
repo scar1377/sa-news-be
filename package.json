@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "prisma:generate": "dotenv -e .env.dev -- prisma generate",
+    "prisma:generate": "prisma generate",
     "prisma:migrate:dev": "dotenv -e .env.dev -- prisma migrate dev",
     "prisma:migrate:test": "dotenv -e .env.test -- prisma migrate deploy",
     "test": "NODE_ENV=test vitest",
