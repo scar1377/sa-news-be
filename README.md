@@ -10,7 +10,7 @@ This project was built as the backend for SA News, with a frontend application p
 
 The API is hosted on Render and is available at:
 
-https://sa-news-be.onrender.com/api
+https://sa-news-be.onrender.com
 
 The `/api` endpoint provides documentation for all available endpoints, including example requests and responses.
 
