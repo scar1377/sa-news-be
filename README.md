@@ -8,17 +8,13 @@ This project was built as the backend for SA News, with a frontend application p
 
 ## Hosted API
 
-The API will be available here once deployed:
+The API is hosted on Render and is available at:
 
-> Deployment URL coming soon
+https://sa-news-be.onrender.com/api
 
-API documentation can be accessed via:
+The `/api` endpoint provides documentation for all available endpoints, including example requests and responses.
 
-```text
-GET /api
-```
-
-This endpoint provides information about all available endpoints, including example requests and responses.
+> **Note:** The API is hosted on Render's free tier. The service may spin down after a period of inactivity, so the first request may take a short while to respond.
 
 ## Features
 
@@ -73,9 +69,9 @@ npm run setup-dbs
 
 ### 4. Create environment files
 
-Create a `.env.dev` file in the root of the project containing the connection URL for the development database:
+Create a `.env.dev` file in the root of the project containing the connection URL for the development database.
 
-Create a `.env.test` file containing the connection URL for the test database:
+Create a `.env.test` file containing the connection URL for the test database.
 
 For example:
 
@@ -83,17 +79,15 @@ For example:
 DATABASE_URL=postgresql://username:password@localhost:5432/database_name
 ```
 
-````
+Replace `username`, `password` and `database_name` with the appropriate values for your local PostgreSQL databases.
 
-Replace `username` and `password` with your local PostgreSQL credentials where required.
-
-Do not commit these environment files or database credentials to Git.
+Do not commit environment files or database credentials to Git.
 
 ### 5. Generate the Prisma client
 
 ```bash
 npm run prisma:generate
-````
+```
 
 ### 6. Apply the database migrations
 
@@ -115,6 +109,14 @@ npm run prisma:migrate:test
 npm run seed
 ```
 
+### 8. Run the API locally
+
+```bash
+npm run dev
+```
+
+By default, the server listens on port `9090`.
+
 ## Testing
 
 The API is tested using Vitest and Supertest.
@@ -123,12 +125,6 @@ Run the test suite with:
 
 ```bash
 npm test
-```
-
-### 8. Run the API locally
-
-```bash
-npm run dev
 ```
 
 The test command runs the application in the test environment and uses the test database.
@@ -161,11 +157,7 @@ The API currently provides the following endpoints:
 
 If no sorting options are provided, articles are returned by creation date in descending order.
 
-For full endpoint documentation and example requests and responses, use:
-
-```text
-GET /api
-```
+For full endpoint documentation and example requests and responses, visit the hosted `/api` endpoint.
 
 ## Project Structure
 
@@ -177,7 +169,19 @@ The application follows a router/controller/model structure.
 - **Error handlers** provide consistent responses for unsuccessful requests.
 - **Tests** verify successful and unsuccessful API behaviour.
 
+## Production
+
+The production API uses:
+
+- **Render** to host the Node.js/Express application
+- **Supabase** to host the PostgreSQL database
+- **Prisma** for database access, schema management and migrations
+
+The TypeScript source is compiled to JavaScript before the production server is started.
+
 ## Available Scripts
+
+### Set up local databases
 
 ```bash
 npm run setup-dbs
@@ -185,11 +189,15 @@ npm run setup-dbs
 
 Creates the local development and test PostgreSQL databases.
 
+### Generate Prisma client
+
 ```bash
 npm run prisma:generate
 ```
 
-Generates the Prisma client using the development environment configuration.
+Generates the Prisma client.
+
+### Run development migrations
 
 ```bash
 npm run prisma:migrate:dev
@@ -197,11 +205,15 @@ npm run prisma:migrate:dev
 
 Runs Prisma development migrations against the development database.
 
+### Apply test migrations
+
 ```bash
 npm run prisma:migrate:test
 ```
 
 Applies existing Prisma migrations to the test database.
+
+### Seed development database
 
 ```bash
 npm run seed
@@ -209,11 +221,37 @@ npm run seed
 
 Seeds the development database.
 
+### Run tests
+
 ```bash
 npm test
 ```
 
 Runs the Vitest test suite using the test environment.
+
+### Run development server
+
+```bash
+npm run dev
+```
+
+Runs the TypeScript application locally using `tsx`.
+
+### Build for production
+
+```bash
+npm run build
+```
+
+Compiles the TypeScript source to JavaScript in the `dist` directory.
+
+### Start production build
+
+```bash
+npm start
+```
+
+Runs the compiled JavaScript application with Node.js.
 
 ## Author
 
